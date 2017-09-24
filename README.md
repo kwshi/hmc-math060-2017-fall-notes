@@ -1,2 +1,3 @@
-# hmc-math60
-Lecture notes for Math 60 (multivariable calculus) with the fantastic Prof. Gu
+# HMC Math 60: Multivariable Calculus (Fall 2017) Lecture Notes
+
+
