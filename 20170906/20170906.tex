@@ -1,0 +1,139 @@
+\documentclass[11pt]{article}
+
+\usepackage{microtype}
+\usepackage{parskip}
+
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools, thmtools}
+
+\usepackage[T1]{fontenc}
+\usepackage[ascii]{inputenc}
+
+\usepackage[margin=60pt]{geometry}
+
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+\usepackage{framed}
+
+\fancypagestyle{notes}{
+    \fancyhf{}
+    \rhead{6 September 2017 \\}
+    \chead{\thepage\ / \pageref{LastPage} \\}
+    \lhead{Math 60: Multivariable Calculus \\ Directional derivatives and Hessian matrices}
+    %\rhead{4 September 2017}
+}
+
+\newcommand{\uvec}[1]{\mathbf{\hat{#1}}}
+\renewcommand{\vec}[1]{\mathbf{#1}}
+
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usetikzlibrary{calc, intersections}
+
+\pagestyle{notes}
+
+\tdplotsetmaincoords{60}{120}
+
+\begin{document}
+
+
+\section*{Homework hints}
+
+
+\paragraph{Ladybugs}
+
+% describe the problem
+
+Recall the directional derivative
+\[
+    D_{\vec v} f = \nabla f \cdot \uvec v
+\]
+is maximum when \(\nabla f\) is parallel to \(\vec v\).
+
+We are given the temperature as a function of position \(z = T(x, y)\), and the partial derivatives
+\begin{align*}
+    \partial_x T \big|_{(3, 7)} &= 3 \\
+    \partial_y T \big|_{(3, 7)} &= -2,
+\end{align*}
+so that
+\[
+    \nabla T \big|_{(3, 7)} = (3, -2).
+\]
+Then since the directional derivative is ``steepest'' along (parallel to) the gradient vector direction, the ladybug should move along a vector parallel to \((3, -2)\) to heat up most rapidly.
+
+Conversely, to cool down most rapidly, the ladybug should travel \emph{in the opposite direction of} \((3, -2)\) (such that \(\cos\theta = -1\)).
+
+In order for the ladybug's temperature not to change, the directional derivative must be \(0\); that is, the dot product of the ladybug's traveling direction and the gradient vector should be \(0\), and thus the traveling direction and the gradient vector direction are perpendicular.
+
+The gradient vector of a function \(f\) is perpendicular to the level sets of \(f\). Why?
+
+Consiqer some surface defined by \(z = f(x, y)\), and take some level curve \(z_0 = f(x(t), y(t))\). Taking derivatives on both sides:
+\[
+    0 = \partial_x f \, \mathrm d_t x + \partial_y f \, \mathrm d_t y = (\partial_x f, \partial_y f) \cdot (\mathrm d_t x, \mathrm d_t y) = \nabla f \cdot \mathrm d_t (x, y).
+\]
+
+\paragraph{Normal vectors and planes}
+
+Consider some plane passing through a point \(\vec p\) with normal vector \(\vec N\) (that is, the plane is perpendicular to vector \(\vec N\)). The plane is thus defined by all points \(\vec x\) such that the ray from \(\vec p\) to \(\vec x\), or \(\overrightarrow{px} = \vec x - \vec p\), is perpendicular to the normal vector:
+\[
+    (\vec x - \vec p) \cdot \vec N = 0.
+\]
+Then expanding the dot product gives
+\[
+    N_1 (x_1 - p_1) + \dots + N_n (x_n - p_n) = 0,
+\]
+or, equivalently,
+\[
+    N_1 x_1 + \dots N_n x_n = N_1 p_1 + \dots + N_n p_n = d.
+\]
+Then, the coefficients of the plane normal to vector \(\vec N\) are given by the components of the normal vector \(\vec N\). 
+
+% gradient to find a tangent plane
+
+
+\subsection*{Hessian matrices}
+
+Consider some multi-variable, real-valued function \(f \colon \mathbb R^3 \to \mathbb R\). Then the gradient of the function
+\[
+    \nabla f = (f_x, f_y, f_z),
+\]
+is a vector field.
+
+Taking the derivative matrix of the gradient gives the \emph{Hessian matrix} of the original function \(f\).
+
+For example, let
+\[
+    f(x, y, z) = 2x^3 + x^2 y + x \sin (yz),
+\]
+so that the gradient is
+\[
+    \nabla f = (f_x, f_y, f_z) = (6 x^2 + 2x y + \sin (yz), x^2 + xz \cos (yz), xy \cos (yz)),
+\]
+and the derivative matrix of the gradient is
+\begin{align*}
+    D \nabla f &= H f \\
+        &= \nabla ^2 f \\
+    &=
+     \begin{pmatrix}
+        f_{xx} & f_{xy} & f_{xz} \\
+        f_{yx} & f_{yy} & f_{yz} \\
+        f_{zx} & f_{zy} & f_{zz}
+    \end{pmatrix} \\
+    &=
+    \begin{pmatrix}
+        12x + 2y & 2x + z \cos (yz) & y \cos (yz) \\
+        2x + z \cos (yz) & -xz^2 \sin (yz) & -xyz \sin (yz) + x \cos (yz) \\
+        y \cos (yz) & -xyz \sin (yz) + x \cos (yz) & -xy^2 \sin (yz)
+    \end{pmatrix}.
+\end{align*}
+
+
+
+
+
+
+\end{document}
+
+
+

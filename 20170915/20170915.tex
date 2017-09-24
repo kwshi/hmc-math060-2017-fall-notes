@@ -1,0 +1,136 @@
+\documentclass[11pt]{article}
+
+\usepackage{microtype}
+\usepackage{parskip}
+
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools, thmtools}
+
+\usepackage[T1]{fontenc}
+\usepackage[ascii]{inputenc}
+
+\usepackage[margin=60pt]{geometry}
+
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+\usepackage{framed}
+
+\usepackage{bm}
+
+\fancypagestyle{notes}{
+    \fancyhf{}
+    \rhead{Friday, 15 September 2017 \\}
+    \chead{\thepage\ / \pageref{LastPage} \\}
+    \lhead{Math 60: Multivariable Calculus \\ Taylor theorem}
+    %\rhead{4 September 2017}
+}
+
+\newcommand{\uvec}[1]{\bm{\hat{#1}}}
+\renewcommand{\vec}[1]{\bm{#1}}
+
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usetikzlibrary{calc, intersections}
+
+\pagestyle{notes}
+
+\tdplotsetmaincoords{60}{120}
+
+\newcommand{\real}{\mathbb R}
+\newcommand{\diff}{\mathrm d}
+\newcommand{\hessian}{\mathrm H}
+\newcommand{\Diff}{\mathrm D}
+
+\begin{document}
+
+\section*{Review of one-variable Taylor stuffs}
+
+Recall, for a one-variable function \(f\), a Taylor polynomial about a point approximates the function:
+\[
+    f(x) \sim P(x) = f(x_0) + f'(x_0) (x-x_0) + \frac{1}{2!} f''(x_0) (x-x_0)^2 + \dots +
+        \underbrace{\frac{1}{n!} f^{(n)} (x_0) (x-x_0)^n}_\text{(remainder)}. 
+\]
+We want to extend this idea to multi-variable real-valued functions (recall that vector-valued functions can be considered component-wise as real-valued functions):
+\[
+    f(\vec x) = \underbrace{
+        f(\vec {x_0}) + \nabla f(\vec {x_0}) (\vec x - \vec{x_0}) + \frac{1}{2!} (\vec x - \vec{x_0})^T H(\vec{x_0}) (\vec x - \vec{x_0})
+    }_{P_2(\vec x)} + 
+    \underbrace{\dots}_\text{remainder}.
+\]
+
+\paragraph{Example}
+
+Consider the function
+\[
+    f(x, y) = \cos x \cos y.
+\]
+Find, for example, \(P_2(x, y)\) (about \((0, 0)\)).
+
+\paragraph{Solution (method 1)}
+
+The polynomial is
+\[
+    P_2(x, y) = f(0, 0) + \nabla f(0, 0) (x, y) + \frac{1}{2!} (x, y)^T \hessian f(0, 0) (x, y).
+\]
+Computing the various derivatives and values,
+\begin{align*}
+    f(0, 0) &= \cos 0 \cos 0 = 1. \\
+    \nabla f &= (\partial_x f, \partial_y f) = (-\sin x \cos y, -\cos x \sin y) = (0, 0). \\
+    \hessian f &=
+        \begin{pmatrix}
+            \partial_x \partial_x f & \partial_y \partial_x f \\
+            \partial_x \partial_y f & \partial_y \partial_y f
+        \end{pmatrix}
+\end{align*}
+
+
+
+
+\paragraph{Solution (method 2)}
+
+We can alternatively take the Taylor polynomials of the two sub-function (\(\cos x, \cos y\)) and expand. It's an alright way to check our work.
+
+\section*{Critical points}
+
+Recall, in one-variable calculus, a critical point of a function \(f(x)\) is found by looking for \(c\) such that
+\[
+    f'(c) = 0
+\]
+(or undefined), and solving for various such possible \(c\).
+
+In multi-variable, the generalization is fairly straightforward. Consider the multi-variable, real-valued function \(g(\vec x)\). The critical points \(\vec c\) are found such that
+\[
+    \nabla g(\vec c) = \vec 0.
+\]
+
+\paragraph{Example}
+
+Consider 
+\[
+    f(x, y) = x^2 + 6y^2.
+\]
+Then the gradient
+\[
+    \nabla f(x, y) = (2x, 12 y).
+\]
+We set this equal to zero and thus get
+\[
+    \nabla f(x, y) = (2x, 12 y) = (0, 0),
+\]
+so that
+\[
+    x, y = 0
+\]
+necessarily.
+
+\subsection*{Minima and maxima}
+
+In one-variable, remember that at some critical point \(c\), if \(f''(c) > 0\), then \(c\) is a local minimum (conversely, if \(f''(c) < 0\), then \(c\) is a local max). Intuitively, we should be able to visualize
+
+
+
+\end{document}
+
+
+

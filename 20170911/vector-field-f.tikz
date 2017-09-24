@@ -1,0 +1,17 @@
+\draw[thick, <->] 
+    (-3,0) -- (3,0)
+    node[right]{\(x\)};
+
+\draw[thick, <->] 
+    (0,-3) -- (0,3)
+    node[above]{\(y\)};
+
+\foreach \i in {-2,...,2} {
+    \foreach \j in {-2,...,2} {
+        \path
+            (\i,\j) coordinate[circle, fill=black, inner sep=1pt];
+
+        \draw[thick, ->, >=stealth]
+            (\i,\j) -- ++(\j/3,-\i/3);
+    }
+}

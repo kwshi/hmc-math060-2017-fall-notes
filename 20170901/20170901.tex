@@ -1,0 +1,508 @@
+\documentclass[11pt]{article}
+
+\usepackage{luacode}
+
+\usepackage{microtype}
+\usepackage{parskip}
+
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools, thmtools}
+
+\usepackage[T1]{fontenc}
+\usepackage[ascii]{inputenc}
+
+\usepackage[margin=60pt]{geometry}
+
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+\usepackage{framed}
+
+\fancypagestyle{notes}{
+    \fancyhf{}
+    \chead{\thepage\ / \pageref{LastPage}}
+    \lhead{Math 60: Multivariable Calculus}
+    \rhead{1 September 2017}
+}
+
+\newcommand{\uvec}[1]{\mathbf{\hat{#1}}}
+\renewcommand{\vec}[1]{\mathbf{#1}}
+
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usetikzlibrary{calc, intersections}
+
+\pagestyle{notes}
+
+\tdplotsetmaincoords{60}{120}
+
+\begin{document}
+
+\section*{Homework review}
+
+Given \(G(x, y, z) = x^2 + y^2 - z\), find the level surfaces.
+
+This is the same as finding level curves, just with one more dimension. 
+
+\begin{framed}
+    An example in lower dimensions (level curves):
+
+    Let \(z = f(x, y) = x^2 + y^2\). For \(z = 1\),
+    \[
+        1 = x^2 + y^2,
+    \]
+    the level curve is a circle with radius \(1\).
+\end{framed}
+
+Correspondingly, in one more dimension, Let \(w = G(x, y, z) = x^2 + y^2 - z\). Then
+\begin{align*}
+    w &= 0 &&\implies x^2 + y^2 - z = 0 \iff z = x^2 + y^2. \\
+    w &= 1 &&\implies x^2 + y^2 - z = 1 \iff z = x^2 + y^2 - 1.
+\end{align*}
+
+\begin{center}
+    \begin{tikzpicture}[tdplot_main_coords]
+
+\begin{luacode}
+
+theta_step = 10
+z_step = .2
+
+theta_mark_step = 30
+z_mark_step = .5
+
+
+function cyl(r, theta, z)
+    return {r*math.cos(math.rad(theta)),
+            r*math.sin(math.rad(theta)),
+            z}
+end
+
+
+function show(coord)
+    tex.sprint('(', coord[1], ',', coord[2], ',', coord[3], ')')
+end
+
+function paraboloid(offset, label, hide_label)
+    for theta = 0,360-theta_step,theta_step do
+        next_theta = theta+theta_step
+        for z = 0,2-z_step/2,z_step do
+            next_z = z+z_step
+            tex.print('\\fill[black, opacity=.25]')
+            show(cyl(math.sqrt(z), theta, z+offset))
+            tex.print('--')
+            show(cyl(math.sqrt(z), next_theta, z+offset))
+            tex.print('--')
+            show(cyl(math.sqrt(next_z), next_theta, next_z+offset))
+            tex.print('--')
+            show(cyl(math.sqrt(next_z), theta, next_z+offset))
+            tex.print(';')
+        end 
+    end
+
+    tex.print('\\draw[black, opacity=.5]')
+    for theta = 0,360-theta_mark_step,theta_mark_step do
+        show({0, 0, 0})
+        for z = 0,2+z_step/2,z_step do
+            tex.print('--')
+            show(cyl(math.sqrt(z), theta, z+offset))
+        end
+    end
+
+    for z = 0,2+z_mark_step/2,z_mark_step do
+        show({0, 0, z+offset})
+        tex.sprint('circle[radius=', math.sqrt(z), ']')
+    end
+    tex.print(';')
+
+    if not hide_label then
+        tex.print('\\node[right] at')
+        show({0, math.sqrt(2), 2+offset})
+        tex.sprint('{\\(w=', label, '\\)};')
+    end
+end
+
+paraboloid(0, 0)
+paraboloid(-1, 1)
+
+
+\end{luacode}
+
+\draw[thick, <->]
+    (-3,0,0) -- (3,0,0) node[below left]{\(x\)};
+\draw[thick, <->]
+    (0,-3,0) -- (0,3,0) node[below right]{\(y\)};
+\draw[thick, ->]
+    (0,0,0) -- (0,0,3) node[above]{\(z\)};
+%
+%\tdplotsetrotatedcoords{0}{0}{120}
+%
+%\newcommand{\paraboloid}[2]{
+%    \begin{scope}[shift={(0,0,#1)}]
+%    \foreach \z in {0,.5,...,2} {
+%    
+%        \draw[black!50, tdplot_rotated_coords] (0,0,\z) circle[radius={sqrt(\z)}];
+%%        \draw[black!50, tdplot_rotated_coords] 
+%%            ({sqrt(\z)},0,\z) arc(0:180:{sqrt(\z)});
+%    }
+%    
+%    %\foreach \theta in {0,15,...,180} {
+%    %    \draw[tdplot_rotated_coords, black!50]
+%    %        (0,0,0) parabola ({sqrt(2)*cos(\theta)},{sqrt(2)*sin(\theta)},2);
+%    %}
+%    \foreach \theta in {0,15,...,360} {
+%        \draw[tdplot_rotated_coords, black!50]
+%            (0,0,0) parabola ({sqrt(2)*cos(\theta)},{sqrt(2)*sin(\theta)},2);
+%    }
+%    
+%    \fill[tdplot_rotated_coords, fill opacity=.25, black]
+%        (0,0,0) parabola ({sqrt(2)},0,2)
+%        arc(0:90:{sqrt(2)})
+%    
+%        (0,0,0) parabola ({-sqrt(2)},0,2)
+%        arc(180:90:{sqrt(2)});
+%    
+%    \fill[tdplot_rotated_coords, fill opacity=.25, black]
+%        (0,0,0) parabola ({sqrt(2)},0,2)
+%        arc(360:270:{sqrt(2)})
+%    
+%        (0,0,0) parabola ({-sqrt(2)},0,2)
+%        arc(180:270:{sqrt(2)});
+%
+%    \node[tdplot_rotated_coords, right] at ({sqrt(2)},0,2) {\(z=#2\)};
+%    
+%    %\foreach \theta in {180,195,...,360} {
+%    %    \draw[tdplot_rotated_coords]
+%    %        (0,0,0) parabola ({sqrt(2)*cos(\theta)},{sqrt(2)*sin(\theta)},2);
+%    %}
+%%    
+%%    \foreach \z in {0,.5,...,2} {
+%%        \draw[tdplot_rotated_coords] (-{sqrt(\z)},0,\z) arc(180:360:{sqrt(\z)});
+%%    }
+%    \end{scope}
+%    
+%}
+%
+%
+%\foreach \theta in {0,5,...,360} {
+%    \foreach \z in {0,.1,...,2} {
+%        \draw[tdplot_rotated_coords, black, opacity=.5]
+%            ({sqrt(\z)*cos(\theta)},{sqrt(\z)*sin(\theta)},\z)
+%            --
+%            ({sqrt(\z+.1)*cos(\theta)},{sqrt(\z+.1)*sin(\theta)},{\z+.1});
+%    }
+%}
+%
+%\foreach \z in {0,.2,...,2} {
+%    \draw[tdplot_rotated_coords, black, opacity=.5]
+%        (0,0,\z) circle[radius={sqrt(\z)}];
+%}
+%
+%\paraboloid{0}{0}
+%\paraboloid{-1}{1}
+%        
+    \end{tikzpicture}
+\end{center}
+
+\section*{One-to-one? Injectivity??}
+
+A \emph{one-to-one} (\emph{injective}) function maps each (set of) inputs to a \emph{unique} outputs, so that no two different combinations of inputs cause the function to spit out the same output:
+\[
+    x_1 \ne x_2 \implies f(x_1) \ne f(x_2).
+\]
+Equivalently:
+\[
+    f(x_1) = f(x_2) \implies x_1 = x_2.
+\]
+
+Visually, we can verify one-to-one-ness for one-variable functions using a ``horizontal line test'':
+\begin{center}
+    \begin{tikzpicture}
+        
+\draw[thick, ->]
+    (0,0) edge (-3,0)
+          --   (3,0) node[right]{\(x\)};
+\draw[thick, ->]
+    (0,0) --   (0,4) node[above]{\(y\)};
+
+\draw[name path=right]
+    (0,0) parabola (2,3);
+\draw[name path=left]
+    (0,0) parabola (-2,3);
+
+\draw[name path=flat]
+    (-3,2) -- (3,2);
+
+\path[name intersections={of=left and flat}]
+    (intersection-1) coordinate[circle, fill=black, inner sep=1pt];
+\path[name intersections={of=right and flat}]
+    (intersection-1) coordinate[circle, fill=black, inner sep=1pt];
+    
+    \end{tikzpicture}
+\end{center}
+(oh no, two (i.e. more than one) intersections! This means that two (i.e. more than one) \(x\) inputs get mapped to the same \(y\) output.)
+
+For multi-valued functions, we do a similar thing, with a horizontal \emph{plane}:
+
+\begin{center}
+    \begin{tikzpicture}[tdplot_main_coords]
+
+\begin{luacode}
+paraboloid(0, 0, true);
+\end{luacode}
+\draw[thick, <->]
+    (-3,0,0) -- (3,0,0) node[below left]{\(x\)};
+\draw[thick, <->]
+    (0,-3,0) -- (0,3,0) node[below left]{\(y\)};
+\draw[thick, ->]
+    (0,0,0) -- (0,0,3) node[below left]{\(z\)};
+
+\fill[black, opacity=.25]
+    (-2,-2,1) -- (-2,2,1) -- (2,2,1) -- (2,-2,1);
+
+\draw[ultra thick]
+    (0,0,1) circle[radius=1];
+
+    \end{tikzpicture}
+\end{center}
+There's a whole \emph{circle} of intersections! The entire freaking \emph{level curve} is an intersection! In other words, a whole freaking \emph{curve} maps to a single output value. That's most certainly not injective. 
+
+In order to make this function injective, we have to get rid of all but a single segment of the function:
+\begin{center}
+    \begin{tikzpicture}[tdplot_main_coords]
+
+\draw[thick, <->]
+    (-3,0,0) -- (3,0,0) node[below left]{\(x\)};
+\draw[thick, <->]
+    (0,-3,0) -- (0,3,0) node[below right]{\(y\)};
+\draw[thick, ->]
+    (0,0,0) -- (0,0,3) node[above]{\(z\)};
+
+\fill[black, opacity=.25]
+    (-2,-2,1) -- (-2,2,1) -- (2,2,1) -- (2,-2,1);
+
+\begin{luacode}
+tex.print('\\draw')
+show({0, 0, 0})
+for z = 0,3,.05 do
+    tex.print('--')
+    show({0, math.sqrt(z), z})
+
+end
+tex.print(';')
+\end{luacode}
+
+\path (0,1,1) coordinate[circle, inner sep=1pt, fill=black];
+
+    \end{tikzpicture}
+\end{center}
+(so that there is only one intersection with the horizontal plane---injectivity, hooray.)
+
+
+\section*{Lecture: limits, partial derivatives, tangent planes, differentiability, \& derivative matrices}
+
+Multivariable functions take on the form
+\[
+    f: \mathbb R^n \to \mathbb R^m.
+\]
+
+A function from \(\mathbb R^n\) to \(\mathbb R^m\) is called a \emph{vector field} (for \(n, m > 1\)).
+
+
+%Example: view velocity of a fluid at a point as a vector in \(\mathbb R3\).
+%
+%\[
+%    \vec v(x, y, z, t) = xyzt \uvec i + (x^2 - y^2) \uvec j + (3z + t) \uvec k.
+%\]
+
+
+
+\subsection*{Multivariable limits?} The definition of a limit is similar to that in one variable:
+\[
+    \lim_{\vec x \to \vec a} \vec f(\vec x) = \vec L
+\]
+is said to hold when \(|\vec f(\vec x) - \vec L|\) can be made arbitrarily small (``near zero'') by making \(|\vec x - \vec a|\) arbitrarily small (but nonzero), where
+\[
+    |\vec x - \vec a| = \sqrt{(x_1 - a_1)^2 + \dots + (x_n - a_n)^2},
+\]
+and
+\[
+    |\vec f(\vec x) - \vec L| = \sqrt{(f_1(\vec x) - L_1)^2 + \dots + (f_m(\vec x) - L_m))^2}.
+\]
+Equivalently, as \(|\vec x - \vec a| = \sum \sqrt{(x_i - a_i)^2}\) tends to \(0\), each of the \(|x_i - a_i|\) tends to \(0\):
+\[
+    |\vec x - \vec a| = \sqrt{(x_1 - a_1)^2 + \dots + (x_n - a_n)^2} \to 0 \iff |x_1 - a_1| \to 0, \dots, |x_n - a_n| \to 0.
+\]
+Likewise,
+\[
+    |\vec f(\vec x) - \vec L| = \sqrt{(f_1(\vec x) - L_1)^2 + \dots + (f_m(\vec x) - L_m)^2} \to 0 \iff |f_1(\vec x) - L_1| \to 0, \dots, |f_m(\vec x) - L_m| \to 0.
+\]
+Thus, such a limit exists if (and only if) all the component-wise limits exist.
+
+We basically want to try to approach \(\vec a\) from every possible direction, in any possible way.
+
+\paragraph{Example} find the limit of the following function as \((x, y) \to (a, b)\):
+\[
+    \vec f(x, y) = (x+y, x^2 y, y \sin (xy)).
+\]
+
+Just plug in when you can, whatever:
+\[
+    \lim_{(x, y) \to (a, b)} y \sin (xy) = b \sin ab.
+\]
+
+\paragraph{Very important example, likely to appear on some unnamed exams}
+\[
+    \lim_{(x, y) \to (0, 0)} \frac{x^2 - y^2}{x^2 + y^2}.
+\]
+Always, first plug in to see what happens. 
+\[
+    \frac{0^2 - 0^2}{0^2 + 0^2} = \frac{0}{0}.
+\]
+\emph{Haha, professor Gu. I got zero over zero!}
+
+\begin{framed}
+Recall
+\[
+    \lim_{x \to 0} \frac{\sin x}{x} = 1.
+\]
+You can take a derivative top and bottom and L'Hopital this stuff.
+\end{framed}
+
+Tend to zero from two directions (\(x \to 0, y = 0\), and \(x = 0, y \to 0\)):
+\begin{center}
+    \begin{tikzpicture}[tdplot_main_coords]
+
+\draw[->]
+    (0,0,0) -- (2,0,0) node[below left]{\(x\)};
+\draw[->]
+    (0,0,0) -- (0,2,0) node[below right]{\(y\)};
+\draw[->]
+    (0,0,0) -- (0,0,2) node[above]{\(z\)};
+
+\draw[ultra thick, ->, >=stealth]
+    (1,0,0) -- node[above left]{\(x \to 0, y = 0\)} (0,0,0);
+\draw[ultra thick, ->, >=stealth]
+    (0,1,0) -- node[above right]{\(x = 0, y \to 0\)} (0,0,0);
+
+    \end{tikzpicture}
+\end{center}
+
+First, from the \(x\) direction:
+\[
+    \lim_{x \to 0} \frac{x^2 - 0^2}{x^2 + 0^2} = 1.
+\]
+Similarly, from the \(y\) direction:
+\[
+    \lim_{y \to 0} \frac{0^2 - y^2}{0^2 + y^2} = -1.
+\]
+The two limits don't coincide! So the limit cannot (does not) exist.
+
+We can try this with any direction. Say, let \(y = kx\):
+\[
+    \lim_{x \to 0} \frac{x^2 - (kx)^2}{x^2 + (kx)^2} = \frac{1-k^2}{1+k^2}.
+\]
+This limit then depends on the direction from which you approach \(0\) (for different \(k\), we get different values for the limit), but it shouldn't, so it doesn't exist.
+
+When \emph{will} the limit exist, if we can approach the limit point from \emph{any} direction, in \emph{any} way? Who knows? Here's a hint: convert to polar coordinates and let
+\begin{align*}
+    x &= r \cos \theta, \\
+    y &= r \sin \theta.
+\end{align*}
+If (and only if) the limit exists as \(r\) tends to \(0\) for all \(\theta\), the limit exists as \((x, y) \to (0, 0)\).
+
+\section*{Partial Derivatives}
+
+A partial derivative is a derivative along a single direction. The \emph{partial derivative of \(f\) with respect to \(x_i\)} is defined
+\[
+    \frac{\partial f}{\partial x_i} = \lim_{h \to 0} \frac{f(x_1, \dots, x_i + h, \dots, x_n) - f(x_1, \dots, x_i, \dots, x_n)}{h}.
+\]
+
+\paragraph{Example}
+
+Consider \(f\colon \mathbb R^3 \to \mathbb R\):
+\[
+    f(x, y, z) = x \cos y + z
+\]
+Then
+\begin{align*}
+    \frac{\partial f}{\partial x} &= 1 \cos y + 0 = \cos y, \\
+    \frac{\partial f}{\partial y} &= x (- \sin y) + 0 = -x \sin y, \\
+    \frac{\partial f}{\partial z} &= 0 + 1 = 1.
+\end{align*}
+
+We can organize a function's partial derivatives with a \emph{gradient} notation:
+\[
+    \nabla f = \left(\frac{\partial f}{\partial x}, \frac{\partial f}{\partial y}, \frac{\partial f}{\partial z}\right),
+\]
+read as the \emph{gradient of \(f\)}.
+
+Thus
+\[
+    \nabla f = (\cos y, -x \sin y, 1).
+\]
+and evaluate
+\[
+    \nabla f(x, \tfrac \pi 2, 3) = (\cos \tfrac \pi 2, -1 \sin \tfrac \pi 2, 1).
+\]
+
+\subsection*{Tangent planes}
+
+Similar idea to tangent lines!
+
+A tangent line is given by
+\[
+    y = f(a) + f'(a) (x-a).
+\]
+
+A tangent (hyper-?)plane is given by
+\[
+    z = f(a) + f_{x_1} (a) (x_1 - a) + \dots + f_{x_n} (a) (x_n - a) = f(a) + \nabla f \cdot (\vec x - \vec a).
+\]
+(Honestly, it's like 2 a.m., and if you really want to know what a tangent plane looks like and don't already know, just Google it. I'm dead. Diagrams are hard. And then if you still don't get it, fine you can come find me and yell at me.)
+
+\paragraph{Example}
+
+Take
+\[
+    f(x, y) = x^2 + y^2,
+\]
+and find the tangent plane at \((1, 2)\).
+
+Then
+\begin{align*}
+    f_x = \partial_x f &= 2x, \\
+    f_y = \partial_y f &= 2y.
+\end{align*}
+Then
+\[
+    z = f(a, b) + \partial_x f(a, b) (x-a) + \partial_y f(a, b) (y-b).
+\]
+For \((a, b) = (1, 2)\):
+\[
+    z = 5 + 2(x-1) + 4(y-2).
+\]
+Just for kicks, we'll approximate \((1.02)^2 + (1.92)^2\) using the tangent plane:
+\[
+    z = 5 + 2(1.02 - 1) + 4(1.92 - 2) = 4.72.
+\]
+The actual value is \(4.7268\), which is fairly close to our approximation, so that's alright.
+
+\subsection*{Derivative matrices}
+
+Now, say we want to find the derivative of a multi-variable, multi-valued function \(f\colon \mathbb R^m \to \mathbb R^n\). We put the partial derivatives into a \emph{derivative matrix}, with each column corresponding to an input variable, and each row corresponding to a component in the function's output:
+\[
+    D \vec f(x_1, \dots, x_n) = \begin{pmatrix}
+        \frac{\partial f_1}{\partial x_1} & \frac{\partial f_1}{\partial x_2} & \dots & \frac{\partial f_1}{\partial x_n} \\
+        \frac{\partial f_2}{\partial x_1} & \frac{\partial f_2}{\partial x_2} & \dots & \frac{\partial f_2}{\partial x_n} \\
+        \vdots & \vdots & \ddots & \vdots \\
+        \frac{\partial f_m}{\partial x_1} & \frac{\partial f_m}{\partial x_2} & \dots & \frac{\partial f_m}{\partial x_n}
+    \end{pmatrix} = \begin{pmatrix}
+        \nabla f_1 \\ \nabla f_2 \\ \vdots \\ \nabla f_m
+    \end{pmatrix}.
+\]
+
+\end{document}
+
+
+

@@ -1,0 +1,167 @@
+\documentclass[11pt]{article}
+
+\usepackage{microtype}
+\usepackage{parskip}
+
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools, thmtools}
+
+\usepackage[T1]{fontenc}
+\usepackage[ascii]{inputenc}
+
+\usepackage[margin=60pt]{geometry}
+
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+\usepackage{framed}
+
+\usepackage{bm}
+
+\fancypagestyle{notes}{
+    \fancyhf{}
+    \rhead{Monday, 18 September 2017 \\}
+    \chead{\thepage\ / \pageref{LastPage} \\}
+    \lhead{Math 60: Multivariable Calculus \\ Lecture 9: Lagrange Multipliers}
+    %\rhead{4 September 2017}
+}
+
+\newcommand{\uvec}[1]{\bm{\hat{#1}}}
+\renewcommand{\vec}[1]{\bm{#1}}
+
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usetikzlibrary{calc, intersections}
+
+\pagestyle{notes}
+
+\tdplotsetmaincoords{60}{120}
+
+\newcommand{\real}{\mathbb R}
+\newcommand{\diff}{\mathrm d}
+\newcommand{\hessian}{\mathrm H}
+\newcommand{\Diff}{\mathrm D}
+
+\begin{document}
+
+\section*{Geometric meaning of differentials}
+
+We want to estimate/approximate a small change in a function's value about a given point \((x, f(x))\). The differential (in one-variable calculus) is \(\diff f = f(x) \, \diff x\), which gives the approximation to a small change in \(f\) based on a small change in x.
+
+For multi-variable, the differential amounts to also a linear approximation of the function's change \(\diff f\) about a given point, based on small changes in its arguments \(\diff x, \diff y, \dots\). Visually (in three dimensions), consider the approximation to the change in the function value given by a tangent plane.
+
+\subsection*{Sensitivity}
+
+Consider the volume of a cylinder, given by \(V = \pi r^2 h\), where \(r\) is the radius of the cylinder, and \(h\) is the height of the can. The differential of volume is 
+% r=1 h=5
+
+\section*{Lagrange multipliers}
+
+\paragraph{Example}
+
+Suppose you want to make a nice gift box for your mom, and you want to maximize the volume of the box in order to give your mom as much stuff as possible. But you bring it to the post office, and U.P.S. gives you the shipping constraints that \(h+w+d = 90\). 
+
+How do we optimize our box?
+
+\paragraph{Solution: plug in.}
+
+We get rid of some variable:
+\[
+	h+w+d = 90 \iff d = 90-h-w,
+\]
+so that
+\[
+	V = hwd = hw(90-h-w) = 90hw - h^2 w - h w^2.
+\]
+We find the critical points:
+\begin{align*}
+	\partial_h V &= 90w - 2hw - w^2 = w(90-2h-w), \\
+	\partial_w V &= 90h - h^2 - 2hw = h(90-h-2w).
+\end{align*}
+But mom doesn't want an empty piece of cardboard, so we don't consider the \(w = 0\) and \(h = 0\) solutions, so that we are left with two linear equations:
+\begin{align*}
+	90-2h-w &= 0, \\
+	90-h-2w &= 0. \\
+\end{align*}
+Solving these two equations gives us
+\[
+	h = w = 30.
+\]
+To check local maximality/minimality, we try taking the Hessian:
+\begin{align*}
+	\hessian V &= \begin{pmatrix} \nabla (\partial_h V) \\ \nabla (\partial_w V) \end{pmatrix} \\
+	&= \begin{pmatrix}
+		-2w & 90-2h-2w \\
+		90-2h-2w & -2h
+	\end{pmatrix}.
+\end{align*}
+Evaluating at the critical point gives
+\[
+	\hessian V(30, 30) =
+	\begin{pmatrix}
+		-60 & -30 \\
+		-30 & -60
+	\end{pmatrix}.
+\]
+Then we apply the dumb second-derivative test to verify that this is indeed a maximum. Yay\dots
+
+\paragraph{The second-derivative test for two-variable real-valued functions}
+
+The \emph{discriminant} is \(D = \partial_{xx} f \, \partial_{yy} f - (\partial_{xy} f)^2 = |\hessian f|\) evaluated at a critical point \((a, b)\).
+
+\begin{enumerate}
+\item If \(D > 0\) and \(\partial_{xx} f > 0\), local minimum.
+\item If \(D > 0\) and \(\partial_{xx} f < 0\), local maximum.
+\item If \(D < 0\), local saddle point.
+\item If \(D = 0\), the test is inconclusive. We call this critical point \emph{degenerate}.
+\end{enumerate}
+
+\paragraph{Solution: lagrangian method}
+
+Suppose we can't actually solve any equations (say, we're given some implicitly defined equations).
+
+We form a Lagrange function \(L(h, w, d, \mu) = V(h, w, d) + \mu g(h, w, d)\). For our U.P.S. contraints, we have
+\[
+	h+w+d = 90,
+\]
+which corresponds to
+\[
+	g(h, w, d) = h+w+d-90 = 0,
+\]
+so that
+\[
+	L(h, w, d, \mu) = hwd + \mu (h+w+d-90).
+\]
+
+We then find the critical points of the Lagrange function
+\[
+	\nabla L = 
+	\begin{pmatrix}
+		wd + \mu \\
+		hd + \mu \\
+		hw + \mu \\
+		h+w+d-90
+	\end{pmatrix}
+	= \vec 0.
+\]
+(Notice that the last component corresponds to the constraint we're given.) Solving various equations gives us
+\[
+	h = w = d = \frac 1 3 \, (90) = 30,
+\]
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
+
+
+

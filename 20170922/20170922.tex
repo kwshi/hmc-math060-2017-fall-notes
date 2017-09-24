@@ -1,0 +1,83 @@
+\documentclass[11pt]{article}
+
+\usepackage{microtype}
+\usepackage{parskip}
+
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools, thmtools}
+
+\usepackage[T1]{fontenc}
+\usepackage[ascii]{inputenc}
+
+\usepackage[margin=60pt]{geometry}
+
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+\usepackage{framed}
+
+\usepackage{bm}
+
+\fancypagestyle{notes}{
+    \fancyhf{}
+    \rhead{Monday, 22 September 2017 \\}
+    \chead{\thepage\ / \pageref{LastPage} \\}
+    \lhead{Math 60: Multivariable Calculus \\ Review: double \& triple integrations (change of order, change of variables)}
+    %\rhead{4 September 2017}
+}
+
+\newcommand{\uvec}[1]{\bm{\hat{#1}}}
+\renewcommand{\vec}[1]{\bm{#1}}
+
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usetikzlibrary{calc, intersections}
+
+\pagestyle{notes}
+
+\tdplotsetmaincoords{60}{120}
+
+\newcommand{\real}{\mathbb R}
+\newcommand{\diff}{\mathrm d}
+\newcommand{\hessian}{\mathrm H}
+\newcommand{\Diff}{\mathrm D}
+
+\begin{document}
+
+\paragraph{Example}
+
+Consider the following integral:
+\[
+    \int_0^8 \int_0^{\sqrt{\frac y 3}} y \, \diff x \, \diff y +
+    \int_8^{12} \int_{\sqrt{y-3}}^{\sqrt{\frac y 3}} y \, \diff x \, \diff y.
+\]
+Visually, this integral is done over a region
+
+Oops. We'll get back to this. 
+
+\section*{Tricks?}
+
+In general, consider some two-variable integral
+\[
+    \int \int f(x, y) \, \diff x \, \diff y.
+\]
+
+% integral over R, x e^(y^2) dA
+% what in the world
+% integral 2x^2 + y^4, x from 0 to 1, y from -1 to 2, dx dy
+
+% visual intuition: volumes
+
+\section*{\emph{What?}}
+
+
+\frac{oasnhtoe}{ashnt}
+
+
+
+
+
+
+\end{document}
+
+

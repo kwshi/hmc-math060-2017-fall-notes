@@ -1,0 +1,170 @@
+\documentclass[11pt]{article}
+
+\usepackage{microtype}
+\usepackage{parskip}
+
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools, thmtools}
+
+\usepackage[T1]{fontenc}
+\usepackage[ascii]{inputenc}
+
+\usepackage[margin=60pt]{geometry}
+
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+\usepackage{framed}
+
+\fancypagestyle{notes}{
+    \fancyhf{}
+    \rhead{Friday, 8 September 2017 \\}
+    \chead{\thepage\ / \pageref{LastPage} \\}
+    \lhead{Math 60: Multivariable Calculus \\ Directional Derivatives, Gradients, High-Order Derivatives, Hessian Matrices, and Potentials}
+    %\rhead{4 September 2017}
+}
+
+\newcommand{\uvec}[1]{\mathbf{\hat{#1}}}
+\renewcommand{\vec}[1]{\mathbf{#1}}
+
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usetikzlibrary{calc, intersections}
+
+\pagestyle{notes}
+
+\tdplotsetmaincoords{60}{120}
+
+\begin{document}
+
+\subsection*{Second-order partial derivatives}
+
+\paragraph{Example}
+
+Take \(f(x, y, z) = x^2 y + y^2 z\).
+
+Then the first-order partial derivatives are
+\begin{align*}
+    \partial_x f &= 2xy, \\
+    \partial_y f &= x^2 + 2yz, \\
+    \partial_z f &= y^2.
+\end{align*}
+
+We can take derivatives again to get \emph{second-order} (and higher order, and so on) partial derivatives:
+\begin{align*}
+    \partial_x^2 f = \frac{\partial^2 f}{\partial x^2} &= 2y, \\
+    \partial_y^2 f &= 2z, \\
+    \partial_z^2 f &= 0.
+\end{align*}
+
+\subsection*{Mixed partial derivatives}
+
+If some multivariable function \(f \colon \mathbb R^n \to \mathbb R\) has continuous first- and second-order partial derivatives, then its mixed derivatives are the same (regardless of the order in which the partial derivatives are taken):
+\[
+    \frac{\partial^2 f}{\partial x_{i_1} \, \partial x_{i_2}} = \frac{\partial^2 f}{\partial x_{i_2} \, \partial x_{i_1}}
+\]
+
+Thus the Hessian matrix, or the derivative matrix of the gradient vector field, is diagonally symmetric.
+
+\subsection*{Rules of Derivatives}
+
+The rules of derivatives remain the same as in one-variable calculus. 
+
+\paragraph{Product rule}
+
+For functions \(f \colon \mathbb R^n \to \mathbb R\) and \(g \colon \mathbb R^n \to \mathbb R\), the product \(f(\vec x) g(\vec x)\) has derivative matrix
+\[
+    Df(\vec x) \, g(\vec x) + g(\vec x) \, Df(\vec x).
+\]
+
+\subsection*{Potential Functions}
+
+Consider some ``potential function,'' for example, \(f(x, y, z) = xy \sin z\). It has gradient
+\[
+    \nabla f = (f_x, f_y, f_z) = (y \sin z, x \sin z, x y \cos z).
+\]
+The potential function \(f \colon \mathbb R^3 \to \mathbb R\) is a \emph{real-valued} function (or \emph{many-to-one}). The gradient \(\nabla f \colon \mathbb R^3 \to \mathbb R^3\), however, is a vector field (a \emph{many-to-many} function). \emph{Whooo, that is so cool.}
+
+\paragraph{Question}
+
+Given a vector field \(\vec F\) (for example, \(\mathbb R^3 \to \mathbb R^3\)). Can this function \(\vec F\) come from some real-valued function \(f\) by taking the gradient \(\nabla f\)? That is, is there some function \(f \colon \mathbb R^3 \to \mathbb R\) such that \(\nabla f = \vec F\)?
+
+Good stuff. This shows up in physics. 
+
+\paragraph{Example}
+
+Take some vector field \(\vec F(x, y, z) \colon \mathbb R^3 \to \mathbb R^3 = (2x, 2y, 2z)\). We happen to notice that this function can be the gradient of 
+\[
+    f\colon \mathbb R^3 \to \mathbb R = x^2 + y^2 + z^2 \quad (+C),
+\]
+since
+\[
+    \nabla f = (2x, 2y, 2z) = \vec F.
+\]
+Then we can call \(\vec F\) a \emph{gradient vector field}, and \(f\) is a potential function of the vector field \(\vec F\).
+
+\paragraph{Equipotential surfaces}
+
+An \emph{equipotential surface} of a vector field \(\vec F\) is just a \emph{level surface} of \(f\), the (real-valued) potential function of the vector field \(\vec F\), where \(\nabla f = \vec F\).
+
+\paragraph{\emph{How do we find the potential function of a vector field?}}
+
+Consider again the example \(\vec F = (2x, 2y, 2z)\). Suppose there exists some function \(f \colon \mathbb R^3 \to \mathbb R\), such that
+\[
+    \nabla f = \vec F.
+\]
+Then 
+\[
+    (f_x, f_y, f_z) = (2x, 2y, 2z).
+\]
+Then
+\begin{align*}
+    f_x &= 2x, \\
+    f_y &= 2y, \\
+    f_z &= 2z.
+\end{align*}
+Then we integrate with respect to \(x\),
+\[
+    f(x, y, z) = x^2 + h_1(y, z),
+\]
+where \(h_1\) may be a function of \(y\) and \(z\) since, when taking partial derivatives, other variables are held constant. Likewise,
+\begin{align*}
+    f(x, y, z) &= y^2 + h_2(x, z), \\
+    f(x, y, z) &= z^2 + h_3(x, y).
+\end{align*}
+Now, doing our best to reconcile the three results, we guess a little, piece things together, and conclude something along the lines of 
+\[
+    f = x^2 + y^2 + z^2 \quad (+C).
+\]
+
+Eventually, we'll do something that might be called \emph{path integrals}, but we shouldn't spoil any secrets right now.
+
+\subsection*{Using the gradient to find the tangent plane}
+
+Consider the surface \(f(\vec x) = f(x, y, z)\). Then consider some point \(\vec x\) on the tangent plane to the level surface of \(f\) at a point \(\vec x_0\). Since the gradient is perpendicular to the tangent plane,
+\[
+    \vec x - \vec {x_0} \perpto \nabla f(\vec {x_0}),
+\]
+so that
+\[
+    \nabla f(\vec {x_0}) \cdot (\vec x - \vec{x_0}) = 0 = f_x(\vec {x_0}) (x-x_0) + f_y(\vec {x_0}) (y-y_0) + f_z(\vec {x_0}) (z-z_0).
+\]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
+
+
+

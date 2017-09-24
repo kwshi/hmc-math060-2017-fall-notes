@@ -1,0 +1,32 @@
+
+
+\path
+    (-2, 0) node[draw](f1) {\(f_1(x_1, x_2, x_3)\)}
+    ( 2, 0) node[draw](f2) {\(f_2(x_1, x_2, x_3)\)}
+    (-2,-2) node[draw](x1){\(x_1(t_1, t_2)\)}
+    ( 0,-2) node[draw](x2){\(x_2(t_1, t_2)\)}
+    ( 2,-2) node[draw](x3){\(x_3(t_1, t_2)\)}
+    (-1,-4) node[draw](t1){\(t_1\)}
+    ( 1,-4) node[draw](t2){\(t_2\)}
+;
+
+\path[draw, <-] 
+    (f1) edge (x1)
+         edge (x2)
+         edge (x3)
+
+    (f2) edge (x1)
+         edge (x2)
+         edge (x3)
+
+    (x1) edge (t1)
+         edge (t2)
+
+    (x2) edge (t1)
+         edge (t2)
+
+    (x3) edge (t1)
+         --   (t2);
+
+
+

@@ -1,0 +1,190 @@
+\documentclass[11pt]{article}
+
+\usepackage{microtype}
+\usepackage{parskip}
+
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools, thmtools}
+
+\usepackage[T1]{fontenc}
+\usepackage[ascii]{inputenc}
+
+\usepackage[margin=60pt]{geometry}
+
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+\usepackage{framed}
+
+\usepackage{bm}
+
+\fancypagestyle{notes}{
+    \fancyhf{}
+    \rhead{Wednesday, 13 September 2017 \\ Lecture 7}
+    \chead{\thepage\ / \pageref{LastPage} \\}
+    \lhead{Math 60: Multivariable Calculus \\ Del Operator, Gradient Vector Fields, Divergence, and Curl}
+    %\rhead{4 September 2017}
+}
+
+\newcommand{\uvec}[1]{\bm{\hat{#1}}}
+\renewcommand{\vec}[1]{\bm{#1}}
+
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usetikzlibrary{calc, intersections}
+
+\pagestyle{notes}
+
+\tdplotsetmaincoords{60}{120}
+
+\newcommand{\real}{\mathbb R}
+\newcommand{\diff}{\mathrm d}
+\newcommand{\Diff}{\mathrm D}
+
+\DeclareMathOperator{\divergence}{div}
+\DeclareMathOperator{\curl}{curl}
+\DeclareMathOperator{\trace}{tr}
+
+\begin{document}
+
+\section*{Operators?}
+
+Consider the three important things we can do to functions in multivariable calculus:
+\begin{itemize}
+\item The \emph{gradient} maps a multi-variable real-valued function to a vector field (multi-variable, multi-valued function).
+\item The \emph{divergence} maps a vector field to a multi-variable real-valued function.
+\item The \emph{curl} maps a vector field to a vector field.
+\end{itemize}
+
+
+\paragraph{Divergence} 
+
+Consider some vector field \(\vec F \colon \real^n \to \real^n\), so that the mapping goes
+\[
+    \vec F \colon (x_1, \dots, x_n) \mapsto (F_1(x_1, \dots, x_n), \dots, F_n(x_1, \dots, x_n)).
+\]
+
+The divergence of the vector field is then defined as
+\[
+    \divergence \vec F = \nabla \cdot \vec F = \frac{\partial F_1}{\partial x_1} + \dots + \frac{\partial F_n}{\partial x_n}.
+\]
+
+For those of us looking for nice connections to linear algebra, we might notice that the divergence operator in fact returns the \emph{trace} of the derivative matrix:
+\begin{gather*}
+    \Diff \vec F =
+    \begin{pmatrix}
+        \frac{\partial F_1}{\partial x_1} & \dots & \frac{\partial F_1}{\partial x_n} \\
+        \vdots & \ddots & \vdots \\
+        \frac{\partial F_n}{\partial x_1} & \dots & \frac{\partial F_n}{\partial x_n}
+    \end{pmatrix}, \\
+    \nabla \cdot \vec F = \frac{\partial F_1}{\partial x_1} + \dots + \frac{\partial F_n}{\partial x_n} = \trace(\Diff \vec F).
+\end{gather*}
+
+Intuitively, we can imagine the divergence operator as a ``flux operator'':
+
+\paragraph{Curl}
+
+The curl is defined only (exactly) for three-dimensional vector fields \(\vec F(x, y, z) \colon \real^3 \to \real^3\ = (F_x(x, y, z), F_y(x, y, z), F_z(x, y, z))\):
+\[
+    \curl \vec F = \nabla \times \vec F =
+    \begin{vmatrix}
+        \uvec x & \uvec y & \uvec z \\
+        \frac{\partial}{\partial x} & \frac{\partial}{\partial y} & \frac{\partial}{\partial z} \\
+        F_x & F_y & F_z
+    \end{vmatrix}
+    =
+    \left(\frac{\partial F_z}{\partial y} - \frac{\partial F_y}{\partial z},
+          \frac{\partial F_x}{\partial z} - \frac{\partial F_x}{\partial x},
+          \frac{\partial F_y}{\partial x} - \frac{\partial F_z}{\partial y}\right).
+\]
+
+\paragraph{Meaning of the curl operator}
+
+The curl detects the rotation of the vector field in space.
+
+Uh, try picturing a fish in water (\emph{s.i.c.}). If the fish is dead, then the curl gives zero.
+
+If the fish is alive, and it's dancing and swimming and flurrying about in lively little curves, turning back and forth to some bouncy musical tunes\footnote{\emph{s.i.c. \scriptsize s.i.c. \tiny s.i.c. s.i.c. s.i.c.}}, the curl detects the ``angular'' movement of the fish. Do you get it? That's okay.
+
+
+\paragraph{Example}
+
+Consider some vector field
+\[
+    \vec F(x, y, z) = (xy, yz, zx).
+\]
+
+
+\paragraph{The ``del'' operator}
+
+For notational convenience, we can denote these operations on functions in terms of the \emph{del (gradient) operator}:
+\[
+    \nabla = \left(\frac{\partial}{\partial x_1}, \dots, \frac{\partial}{\partial x_n}\right).
+\]
+
+\paragraph{Homework hints}
+
+Show that
+\[
+    \nabla \times (\nabla f) = \vec 0
+\]
+for all functions \(f \colon \real^3 \to \real\).
+
+Just write things out, do the algebra, plug things in, and simplify. Don't be scared. It's hardly even exciting.
+
+\section*{Gradient fields, potential functions, and equipotential sets}
+
+We know, given a real-valued function \(f\), the gradient \(\nabla f\) is a vector field. But, on the other hand, if we are given some vector field \(\vec F\), can we always find some correspondent scalar potential function \(f\) (that is, does there always exist some \(f\) such that \(\vec F = \nabla f\))?
+
+Unfortunately, \emph{no}. Here's a little example:
+
+Consider
+\[
+    \vec F(x, y) = (y, - x).
+\]
+Suppose for sake of contradiction that there were some \(f \colon \real^2 \to \real\), such that
+\begin{align*}
+    \vec F &= \nabla f, \\
+    (y, -x) &= \left(\frac{\partial f}{\partial x}, \frac{\partial f}{\partial y}\right).
+\end{align*}
+Then
+\begin{align*}
+    \frac{\partial f}{\partial x} &= y, \\
+    \frac{\partial f}{\partial y} &= -x.
+\end{align*}
+Then integrating both partial derivatives gives, respectively,
+\begin{align*}
+    f &= xy + C_1(y), \\
+    f &= -xy + C_2(x).
+\end{align*}
+Noticing that we can't really reconcile the two, we can also try taking the mixed partial derivatives:
+\begin{align*}
+    \frac{\partial^2 f}{\partial y \partial x} &= 1, \\
+    \frac{\partial^2 f}{\partial x \partial y} &= -1,
+\end{align*}
+a contradiction, since the two mixed partials should be equal. Thus there cannot be some real-valued \(f\) such that \(\nabla f = \vec F\).
+\qed
+
+\subsection*{Equipotential curves}
+
+\begin{framed}
+    \itshape
+    You are the level curves of your mom.
+    
+    You are the equipotential curves of your grandma.
+    
+    The grandson of grandma, son of mom. 
+    
+    But they are all the same thing, just different ways to say them.
+\end{framed}
+
+
+
+
+
+
+
+\end{document}
+
+
+

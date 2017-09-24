@@ -1,0 +1,287 @@
+\documentclass[11pt]{article}
+
+\usepackage{microtype}
+\usepackage{parskip}
+
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools, thmtools}
+
+\usepackage[T1]{fontenc}
+\usepackage[ascii]{inputenc}
+
+\usepackage[margin=60pt]{geometry}
+
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+\usepackage{framed}
+
+\fancypagestyle{notes}{
+    \fancyhf{}
+    \rhead{Monday, 4 September 2017 \\ \thepage\ / \pageref{LastPage}}
+    \lhead{Math 60: Multivariable Calculus \\ Differentiable Functions, Chain Rule, Directional Derivatives, Relations to Gradient}
+    %\rhead{4 September 2017}
+}
+
+\newcommand{\uvec}[1]{\mathbf{\hat{#1}}}
+\renewcommand{\vec}[1]{\mathbf{#1}}
+
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usetikzlibrary{calc, intersections}
+
+\pagestyle{notes}
+
+\tdplotsetmaincoords{60}{120}
+
+\begin{document}
+
+%\section*{Differentiable Functions, Chain Rule, Directional Derivative, Relations to Gradient}
+
+%A multivariable function \(f\) is said to be differentiable at \((a, b)\) 
+
+\section*{Differentiability} 
+
+A multivariable function \(\vec f\colon \mathbb R^n \to \mathbb R^m\) is said to be differentiable at \(\vec a \in \mathbb R^n\) if all its partial derivatives \(\frac{\partial \vec f}{\partial x_i}\) exist \emph{and} the local tangent plane \(\vec h(\vec x) = \vec f(\vec a) + \nabla \vec f(\vec a) \cdot (\vec x - \vec a)\) is a ``good'' approximation of the function:
+\[
+    \lim_{\vec x \to \vec a} = \frac{\vec f(\vec x) - \vec h(\vec x)}{|\vec x - \vec a|} = 0.
+\]
+
+A nice little shortcut, because we're college math students and not hardcore real analysts, is that a function is differentiable if its partial derivatives are all continuous.
+
+\section*{Chain Rule}
+
+The chain rule deals with the \emph{composition} of two functions. In one-variable calculus, the chain rule looks something like, for some function \(f = g \circ h\) (that is, \(f(x) = g(h(x))\)),
+\[
+    \frac{\mathrm df}{\mathrm dx} = \frac{\mathrm df}{\mathrm dh} \frac{\mathrm dh}{\mathrm dx} = \frac{\mathrm dg}{\mathrm dh} \frac{\mathrm dh}{\mathrm dx} = g'(h(x)) h'(x).
+\]
+
+For multi-variable functions (\(D\), the chain rule takes on a matrix form:
+\[
+    D (\vec g \circ \vec h) = D (\vec g) D (\vec h).
+\]
+
+\paragraph{Example}
+
+Consider \(\vec f\colon \mathbb R^3 \to \mathbb R^2\) given by 
+\[
+    \vec f(x_1, x_2, x_3) = (x_1 - x_2, x_1 x_2 x_3),
+\]
+and \(\vec x\colon \mathbb R^2 \to \mathbb R^3\) given by
+\[
+    \vec x(t_1, t_2) = (t_1 t_2, t_1^2, t_2^2).
+\]
+
+\paragraph{Context}
+
+Here's how the mapping looks:
+\[
+    \mathbb R^2 \overset{\vec x}{\to} \mathbb R^3 \overset{\vec f}{\to} \mathbb R^2,
+\]
+or
+\[
+    (t_1, t_2) 
+    \overset{\vec x}{\mapsto} 
+    (\underbrace{x_1(t_1, t_2)}_{t_1 t_2}, 
+     \underbrace{x_2(t_1, t_2)}_{t_1^2}, 
+     \underbrace{x_3(t_1, t_2)}_{t_2^2})
+    \overset{\vec f}{\mapsto}
+    (\underbrace{f_1(x_1, x_2, x_3)}_{x_1-x_2}, 
+     \underbrace{f_2(x_1, x_2, x_3)}_{x_1 x_2 x_3}).
+\]
+
+Notice the overall (composed) mapping is then
+\[
+    \mathbb R^2 \xrightarrow{\vec f \circ \vec x} \mathbb R^2.
+\]
+
+\paragraph{Solution (method 1): tedious substitution}
+
+Find the derivative of the composition of \(f\) and \(x\),
+\[
+    D(\vec f \circ \vec x)(\vec t).
+\]
+
+We can simply plug in the composed function 
+\[
+    (\vec f \circ \vec x)(\vec t) = (x_1-x_2, x_1 x_2 x_3) = (t_1 t_2 - t_1^2, (t_1 t_2) (t_1^2) (t_2^2)) = (t_1 t_2 - t_1^2, t_1^3 t_2^3)
+\]
+and take the derivative:
+\[
+    D(\vec f \circ \vec x)(\vec t) = 
+    \begin{pmatrix}
+        \partial_{t_1} \left(t_1 t_2 - t_1^2\right) & \partial_{t_2} \left(t_1 t_2 - t_1^2\right) \\
+        \partial_{t_1} \left(t_1^3 t_2^3\right) & \partial_{t_2} \left(t_1^3 t_2^3\right)
+    \end{pmatrix} =
+    \begin{pmatrix}
+        t_2 - 2 t_1 & t_1 \\
+        3 t_1^2 t_2^3 & 3 t_1^3 t_2^2
+    \end{pmatrix}.
+\]
+
+\paragraph{Solution (method 2): chain rule (\emph{better!!!})}
+
+Alternatively, apply the chain rule:
+\begin{align*}
+    D(\vec f \circ \vec x)(\vec t) &= D\vec f(\vec x) D\vec x(\vec t) \\
+        &=
+        \begin{pmatrix}
+            \partial_{x_1} (x_1 - x_2) & \partial_{x_2} (x_1 - x_2) & \partial_{x_3} (x_1 - x_2) \\
+            \partial_{x_1} (x_1 x_2 x_3) & \partial_{x_2} (x_1 x_2 x_3) & \partial_{x_3} (x_1 x_2 x_3) \\
+        \end{pmatrix}
+        \begin{pmatrix}
+            \partial_{t_1} (t_1 t_2) & \partial_{t_2} (t_1 t_2) \\
+            \partial_{t_1} (t_1^2) & \partial_{t_2} (t_1^2) \\
+            \partial_{t_1} (t_2^2) & \partial_{t_2} (t_2^2)
+        \end{pmatrix} \\
+        &=
+        \begin{pmatrix}
+            1 & -1 & 0 \\
+            x_2 x_3 & x_1 x_3 & x_1 x_2
+        \end{pmatrix}
+        \begin{pmatrix}
+            t_2 & t_1 \\
+            2 t_1 & 0 \\
+            0 & 2 t_2
+        \end{pmatrix} \\
+        &= 
+        \begin{pmatrix}
+            t_2 - 2 t_1 & t_1 \\
+            x_2 x_3 t_2 + 2 x_1 x_3 t_1 & x_2 x_3 t_1 + 2 x_1 x_2 t_2
+        \end{pmatrix} \\
+        &=
+        \begin{pmatrix}
+            t_2 - 2 t_1 & t_1 \\
+            (t_1^2) (t_2^2) t_2 + 2 (t_1 t_2) (t_2^2) t_1 & (t_1^2) (t_2^2) t_1 + 2 (t_1 t_2) (t_1^2) t_2
+        \end{pmatrix} \\
+        &=
+        \begin{pmatrix}
+            t_2 - 2 t_1 & t_1 \\
+            3 t_1^2 t_2^3 & 3 t_1^3 t_2^2
+        \end{pmatrix}.
+\end{align*}
+
+
+\paragraph{Solution (method 3?): cool diagrams}
+
+\begin{center}
+    \begin{tikzpicture}
+        \input{diagram.tikz}
+    \end{tikzpicture}
+\end{center}
+
+The partial derivative of the function's \(i\)-th component \(f_i\) with respect to some input \(t_j\) can be found by tracing all ``paths'' on the diagram from \(t_j\) to \(f_i\). For example, the partial derivative of \(f_2\) with respect to \(t_1\) is found by
+\begin{center}
+    \begin{tikzpicture}[scale=2]
+        \input{diagram.tikz}
+
+\path[draw, ultra thick, <-]
+    (f2) edge node[fill=white]{\(\partial_{x_1} f_2\)} (x1)
+         edge node[fill=white]{\(\partial_{x_2} f_2\)} (x2)
+         edge node[fill=white]{\(\partial_{x_3} f_2\)} (x3)
+
+    (x1) edge node[fill=white]{\(\partial_{t_1} x_1\)} (t1)
+    (x2) edge node[fill=white]{\(\partial_{t_1} x_2\)} (t1)
+    (x3) --   node[fill=white]{\(\partial_{t_1} x_3\)} (t1)
+;
+
+    \end{tikzpicture}
+\end{center}
+\[
+    \partial_{t_1} f_2 = \partial_{x_1} f_2 \cdot \partial_{t_1} x_1 +
+                         \partial_{x_2} f_2 \cdot \partial_{t_1} x_2 +
+                         \partial_{x_3} f_2 \cdot \partial_{t_1} x_3
+\]
+
+
+Why does it work? Turns out, this is just another way to do, or \emph{visualize}, derivative matrix multiplication. Tracing the ``paths'' of each component is the same thing as component-wise matrix multiplication:
+\begin{align*}
+    D_{\vec t}\vec f &= D_{\vec x}\vec f \, D_{\vec t} \vec x \\
+    &=
+    \left(\begin{array}{ccc}
+        \partial_{x_1} f_1 & \partial_{x_2} f_1 & \partial_{x_3} f_1 \\ \hline
+        \multicolumn{1}{|c}{\partial_{x_1} f_2} & \partial_{x_2} f_2 & \multicolumn{1}{c|}{\partial_{x_3} f_2} \\ \hline
+    \end{array}\right)
+    \left(\begin{array}{|c|c}
+        \cline{1-1}
+        \partial_{t_1} x_1 & \partial_{t_2} x_1 \\
+        \partial_{t_1} x_2 & \partial_{t_2} x_2 \\
+        \partial_{t_1} x_3 & \partial_{t_2} x_3 \\
+        \cline{1-1}
+    \end{array}\right) \\
+    &=
+    \left(\begin{array}{cc}
+        \partial_{x_1} f_1 \, \partial_{t_1} x_1 + \partial_{x_2} f_1 \, \partial_{t_1} x_2 + \partial_{x_3} f_1 \, \partial_{t_1} x_3 &
+        \partial_{x_1} f_1 \, \partial_{t_2} x_1 + \partial_{x_2} f_1 \, \partial_{t_2} x_2 + \partial_{x_3} f_1 \, \partial_{t_2} x_3 \\
+        \cline{1-1}
+        \multicolumn{1}{|c|}{\partial_{x_1} f_2 \, \partial_{t_1} x_1 + \partial_{x_2} f_2 \, \partial_{t_1} x_2 + \partial_{x_3} f_2 \, \partial_{t_1} x_3} &
+        \partial_{x_1} f_2 \, \partial_{t_2} x_1 + \partial_{x_2} f_2 \, \partial_{t_2} x_2 + \partial_{x_3} f_2 \, \partial_{t_2} x_3 \\
+        \cline{1-1}
+    \end{array}\right)
+\end{align*}
+
+
+\section*{Implicit Derivatives}
+
+Consider some surface defined by the equation \(F(x, y, z) = 0\). Implicitly take partial derivatives with respect to each variable, considering that \(z\) to be a function of \(x\) and \(y\):
+\begin{align*}
+    \partial_x F + \partial_z F \, \partial_x z &= 0, \\
+    \partial_y F + \partial_z F \, \partial_y z &= 0.
+\end{align*}
+Consequently,
+\begin{align*}
+    \partial_x z &= -\frac{\partial_x F}{\partial_z F}, \\
+    \partial_y z &= -\frac{\partial_y F}{\partial_z F}. \\
+\end{align*}
+
+\paragraph{Example}
+
+Consider the surface given by 
+\[
+    x^2 + y^2 + z^2 - 1 = 0,
+\]
+a sphere with radius \(1\). The partial derivatives of \(z\) with respect to \(x\) and \(y\) are then
+\begin{align*}
+    \partial_x z &= - \frac{\partial_x (x^2 + y^2 + z^2 - 1)}{\partial_z (x^2 + y^2 + z^2 - 1)} = - \frac{2x}{2z} = - \frac x z \\
+    \partial_y z &= - \frac y z.
+\end{align*}
+
+
+
+
+
+\section*{Directional Derivatives}
+
+%Visualization: cut a plane along some direction, and take a derivative in the cross-section.
+
+Consider the derivative of a function \(\vec f\) along some direction \(\uvec v\). The \emph{directional derivative} can be thought of as a derivative of a function inside a ``cross section'':
+\begin{center}
+    \begin{tikzpicture}[tdplot_main_coords]
+        \input{dderiv.tikz}
+    \end{tikzpicture} \\
+    \begin{tikzpicture}
+        \input{dderiv2d.tikz}
+    \end{tikzpicture}
+\end{center}
+
+The line along the direction of differentiation is parametrized by some
+\[
+    \vec l(t) = \vec p + t \uvec v,
+\]
+so that the function along the line
+\[
+    \vec f \big|_{\vec l(t)} = \vec f(\vec p + t \uvec v),
+\]
+so that the directional derivative can be found by the chain rule
+\[
+    D_{\uvec v} \vec f = \mathrm d_t \vec f(\vec p + t \uvec v) = D \vec f \cdot \uvec v.
+\]
+
+
+
+
+
+\end{document}
+
+
+

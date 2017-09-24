@@ -1,0 +1,5 @@
+tikz-3dplot-documentation
+*.swp
+*.sync-conflict-*
+*.pyc
+__pycache__
