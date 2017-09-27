@@ -1,0 +1,115 @@
+\documentclass{multi}
+
+\course{Math 60: Multivariable Calculus}
+\title{Spherical coordinates, line integrals}
+\date{Wednesday, 2017 September 2017}
+
+\begin{document}
+
+\section*{Spherical coordinates}
+
+In a spherical coordinate system \((\rho, \theta, \phi)\), the spherical volume element is given by
+\[
+    \diff V = \rho^2 \sin \phi \, \diff \rho \, \diff \phi \, \diff \theta.
+\]
+
+% spherical visualization
+
+
+\paragraph{Example}
+
+\begin{mdframed}
+    Find the mass of a cone with density at position \((x, y, z)\) given by
+    \[
+        f(x, y, z) = \frac{e^{x^2 +y^2+z^2}}{\sqrt{x^2 + y^2 + z^2}}.
+    \]
+    % shape of cone: vertex at origin, pointing up, 45deg cross section angle
+\end{mdframed}
+
+The mass can be found by integrating the density over the volume:
+\[
+    m = \iiint_W f(x, y, z) \, \diff V.
+\]
+We write \(f\) in spherical coordinates:
+\[
+    f(x, y, z) = \frac{e^{x^2 + y^2 + z^2}}{\sqrt{x^2 + y^2 + z^2}} = \frac{e^{\rho^2}}{\rho}.
+\]
+Then the volume element is
+\[
+    \diff V = \rho^2 \sin \phi \, \diff \rho \, \diff \phi \, \diff \theta.
+\]
+Then integrate:
+\begin{align*}
+    m &= \int_{\theta=0}^{2\pi} \int_{\phi=0}^{\frac \pi 4} \int_{\rho=0}^{2} 
+    \frac{e^{\rho^2}}{\rho} \, \rho^2 \sin \phi \, \diff \rho \, \diff \phi \, \diff \theta \\
+    &= \iiint \rho e^{\rho^2} \sin \phi \, \diff \rho \, \diff \phi \, \diff \theta \\
+    &= 
+\end{align*}
+
+
+In general, it is a good idea to consider using spherical coordinates rather than cartesian coordinates if the function seems to depend on the spherical radius \(\rho^2 = x^2+y^2+z^2\), or if the shape of the region \(W\) lends itself to spherical coordinates.
+
+Likewise, if the integrand function depends on the plane (``cylindrical'') radius \(r^2 = x^2+y^2\), or if the region has some cylindrical symmetry, it may be wise to consider using cylindrical geometry.
+
+\section*{Line integrals}
+
+There are two kinds of line integrals.
+\begin{itemize}
+\item We may integrate a \emph{real-valued} function \(f \colon \real^n \to \real\) over a curve. We can interpret this integral as the \emph{total mass} of the curve given the \emph{linear density function} \(f\).
+
+\item We may integrate a \emph{vector-valued} function \(\vec F \colon \real^n \to \real^n\) over a curve. This integral shows up a little in physics, where the integral \(\int \vec F \cdot \diff \vec s\) is called the \emph{work} done by the force \(\vec F\).
+\end{itemize}
+
+\paragraph{Example}
+
+\begin{mdframed}
+Find the mass of the wire \(C\) which is the section of the parabola \(y = x^2\) from \((1, 1)\) to \((2, 4)\), given the linear mass density of the wire \(\rho (x, y, z) = 2x\).
+\end{mdframed}
+
+% diagram of parabola section
+
+The total mass \(m\) is found by the integral of the density over the curve:
+\[
+    m = \int_C \rho \, \diff s = \int_C 2x \, \diff s,
+\]
+where \(\diff S\) is the ``differential'' of the arc length, or, intuitively, an infinitesimally small section of the arc length. That is,
+\[
+    \diff s = |\diff \vec x| = \sqrt{\diff x^2 + \diff y^2} = |\dot {\vec x}(t)| \, \diff t,
+\]
+for some \emph{parametrization} of the curve \(\vec x(t)\) (so that the velocity is \(\dot{\vec x}(t)\), and the speed \(|\dot{\vec x}(t)|\). Then, to parametrize the curve, let
+\begin{align*}
+    x &= t, \\
+    \implies y &= t^2,
+\end{align*}
+so that the curve \(C\) from \((1, 1)\) to \((2, 4)\) under this parametrization is defined over \(t \in [1, 2]\),
+and the speed is
+\[
+    |(\dot x(t), \dot y(t))| = |(1, 2t)| = \sqrt{1+4t^2},
+\]
+and the arc-length-differential is then
+\[
+    \diff s = |(\dot x(t), \dot y(t))| \, \diff t = \sqrt{1+4t^2} \, \diff t.
+\]
+Then we can integrate for the mass:
+\begin{align*}
+    m &= \int_C 2x \, \diff s \\
+    &= \int_C 2x \sqrt{1+4t^2} \, \diff t \\
+    &= \int_C 2t \sqrt{1+4t^2} \, \diff t \\
+    &= \left.\frac 1 4 \, \frac 2 3 \, (1+4t^2)^{\frac 3 2}\right\rvert_C \\
+    &= \left. \frac 1 6 \, (1+4t^2)^{\frac 3 2}\right\rvert_1^2 \\
+    &= \frac 1 6 \, (1+4t^2)
+\end{align*}
+
+% examples:
+% F = (x, y) and also F = (3/4, 1/2)
+% over a circle section defined by r=(cos t, sin t) for t from 0 to pi
+
+% diagrams
+
+% conceptually work equals zero because F perpendicular to r
+% or do it
+
+
+
+\end{document}
+

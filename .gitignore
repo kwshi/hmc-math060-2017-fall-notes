@@ -3,4 +3,6 @@ tikz-3dplot-documentation
 *.sync-conflict-*
 *.pyc
 __pycache__
+*.aux
+*.log
 \#*\#
