@@ -1,0 +1,68 @@
+\documentclass{multi}
+
+\title{Green's theorem!}
+\course{Math 60: Multivariable Calculus}
+\date{2017 September 29 (Friday)}
+
+\begin{document}
+
+\section*{Green's Theorem}
+
+For some \emph{bounded} region \(D\), Green's theorem gives a relation between a double integration over the region \(D\) and a line integration over the \emph{boundary} \(\partial D\) of \(D\).
+
+\paragraph{Example}
+
+Consider some circular disk \(D\) of radius \(r\).
+
+There are three ways to parametrize the integral over the circular boundary \(\partial D\) in the \emph{counter-clockwise} direction:
+\begin{itemize}
+\item \(x = R \cos \theta, y = R \sin \theta\), for \(0 \le \theta < 2 \pi\). This parametrization is the standard conversion to polar coordinates. It works.
+\item \(x = R \sin \theta, y = R \cos \theta\), for \(0 \le \theta < 2 \pi\). While this parametrization does cover the circular boundary, the \emph{direction} of integration is reversed; this parametrization corresponds to a \emph{clockwise} integration along the circular boundary. Orientation matters.
+\item \(x = R \cos 2\pi t, y = R \sin 2 \pi t\), for \(0 \le t < 1\). This parametrization also works, because it traverses the circle with the right orientation.
+\end{itemize}
+
+\paragraph{Statement of Green's theorem}
+
+Consider some function in the real plane \(\vec F \colon \real^2 \to \real^2 = (M(x, y), N(x, y))\). Green's theorem relates the integral over the boundary to the integral inside the region:
+\[
+    \oint_{\partial D} (M \, \diff x + N \, \diff y) = \iint_{D} \left(\frac{\partial N}{\partial x} - \frac{\partial M}{\partial y}\right) \diff x \, \diff y.
+\]
+Stated in vector form, where \(\vec F = (M, N)\) and \(\diff \vec r = (x, y)\), Green's theorem can easily be thought of as
+\[
+    \oint_{\partial D} \vec F \cdot \diff \vec r = \iint_{D} (\nabla \times \vec F) \, \diff x \, \diff y.
+\]
+where \(\nabla \times \vec F\) is thought of as a \emph{two-dimensional curl} of the vector field (nice, Tim!).
+
+
+\paragraph{Example}
+
+Consider some function \(\vec F = (-y, x)\). We'll still let \(D\) be the circle with radius \(r\). The boundary integral is then
+\[
+    \oint_{\partial D} \vec F \cdot \diff \vec r = 
+    \oint_{\partial D} (-y, x) \cdot (\diff x, \diff y) =
+    \oint_{\partial D} (-y \, \diff x + x \, \diff y).
+\]
+We'll use the parametrization \(x = R \cos \theta, y = R \sin \theta\). Then the integral becomes
+\[
+    \oint_{\partial D} (-(R \sin \theta) (-R \cos \theta \, \diff \theta) +
+                        -(R \cos \theta) (R \sin \theta \, \diff \theta)),
+\]
+since \(\diff x = R (-\cos \theta \, \diff \theta) = -R \cos \theta \, \diff \theta\), and \(\diff y = R \sin \theta \, \diff \theta\). Simplify the boundary integral:
+\[
+    \oint_{\partial D} R^2 (\sin^2 \theta + \cos^2 \theta) \, \diff \theta = \oint_{\partial_D} R^2 \, \diff \theta
+    = R^2 (2 \pi) = 2 \pi R^2.
+\]
+But notice, by not much coincidence, that the result of the integral contains a \(\pi R^2\) factor, which looks very much like the \emph{area} of the region! 
+
+Suppose we took the integral of the curl over the surface:
+\[
+    \iint_D \left(\frac{\partial}{\partial x} (x) - \frac{\partial}{\partial y} (-y)\right) \diff x \, \diff y =
+    \iint_D 2 \, \diff x \, \diff y = 2 \pi R^2,
+\]
+so that the two integrals match up. Wow, Green's theorem is true! What a surprise. {\tiny If only we did proofs in this class\dots}
+
+
+
+
+
+\end{document}
