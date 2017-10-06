@@ -1,0 +1,97 @@
+\documentclass{multi}
+
+\title{Three Fundamental Theorems (Stokes', Green's, and Gauss's)}
+\course{Math 60: Multivariable Calculus}
+\date{2017 October 6 (Friday)}
+
+\begin{document}
+
+\section*{Stokes' Theorem}
+
+Recall Green's theorem:
+\[
+    \oint_{C=\partial D} \vec F \cdot \diff \vec s = \iint_D \underbrace{(\nabla \times \vec F)}_\text{means taking some sort of derivative} \cdot \uvec z \, \diff A = \iint_D \left(\frac{\partial N}{\partial x} - \frac{\partial M}{\partial y}\right) \, \diff A,
+\]
+where \(\vec F = (M, N)\).
+
+\section*{Unification}
+
+Take some integration of a function \(\phi\):
+\[
+    \int \phi
+\]
+If that manifold is \emph{bounded} by some lower-dimensional manifold, then we make find some relationship between the integral over the boundary \(\partial M\) and the integral over the manifold \(M\):
+\[
+    \int_{\partial M} \phi = \int_M \underbrace{\partial \phi}_\text{some kind of derivative}.
+\]
+
+In essence, these relationships for various multi-dimensional manifolds form the ``fundamental theorems'' of calculus.
+
+In fact, consider the one-variable fundamental theorem:
+\[
+    F(b) - F(a) = \int_a^b \frac{\diff}{\diff t} \, F \, \diff t.
+\]
+We can see this integral as an integration over the segment of the one-dimensional \(t\) curve, bounded by the endpoints \(a\) and \(b\).
+
+\section*{Stokes' Theorem}
+
+Consider some vector field
+\[
+    \vec F = (P, Q, R).
+\]
+We want to take this integral over a curve in \(3\)-space \(C\). We begin by considering \(C\) as the closed boundary of some surface \(S\). Then we relate the integrals over the boundary and over the surface:
+\[
+    \int_{C=\partial S} \vec F \cdot \diff \vec s = \iint_S \curl \vec F \cdot \diff \vec S,
+\]
+where \(\diff \vec s\) is the curve segment, and \(\diff \vec S\) is the surface normal element.
+
+\subsection*{Geometric interpretations}
+
+The ``circulation'' of \(\vec F\) along \(\partial S\) is the ``sum'' of how much field \(\vec F\) ``curls'' in \(S\).
+
+\paragraph{Example}
+
+Take the field \(\vec F = (-y, 2x, z)\). We find the integral over the curve 
+\[
+    \oint_C \vec F \cdot \diff \vec s,
+\]
+where \(C\) is the outwardly-oriented (counter-clockwise, looking from outside the sphere) union of three arcs along the unit sphere (at intersection with the planes):
+% visualization sphere with three arcs and normal somewhere
+
+Then the integral is
+\[
+    \oint_{C = C_1 \cup C_2 \cup C_3} \vec F \cdot \diff \vec s,
+\]
+We notice that \(C\) forms a closed curve; then, we can pick some convenient spherical surface \(S\) such that \(C\) is the boundary of \(S\). 
+
+We calculate the curl of \(\vec F\):
+\[
+    \curl \vec F = 
+    \begin{vmatrix}
+        \uvec x & \uvec y & \uvec z \\
+        \partial_x & \partial_y & \partial_z \\
+        -y & 2x & z
+    \end{vmatrix}
+    =
+    0 \uvec x + 0 \uvec y + (2 - (-1)) \uvec z
+    = 3 \uvec z
+    = (0, 0, 3).
+\]
+
+Then by Stokes' theorem the integral equals
+\[
+    \iint_S \underbrace{\curl \vec F}_{3 \uvec z} \cdot \underbrace{\diff \vec S}_{\uvec n \, \diff S}.
+\]
+
+Recall the spherical surface area element
+\[
+    \diff S = r^2 \sin \phi \, \diff \phi \, \diff \theta,
+\]
+(note \(r\) is fixed here), so that the normal element is
+\[
+    \diff \vec S = \uvec n \, \diff S = (\sin\phi \cos\theta, \sin \phi \sin \theta, \cos \phi).
+\]
+
+
+\end{document}
+
