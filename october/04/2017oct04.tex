@@ -1,0 +1,90 @@
+\documentclass{multi}
+
+\title{Surface integrals}
+\course{Math 60: Multivariable Calculus}
+\date{2017 October 4 (Wednesday)}
+
+
+\begin{document}
+
+\section*{Geometric intuition}
+
+Integrating a real-valued function over some line/curve/surface/volume/region can be thought of as integrating (\emph{summing}) a density function to obtain a total mass.
+
+
+Vector fields are trickier. 
+
+For most problems we might care about, surfaces are either spheres, cylinders, or general graphs.
+
+
+\section*{Area elements}
+
+Over a cylindrical surface (with a cylindrical-coordinate parametrization), the area element is
+\[
+    \diff S = r \, \diff \theta \, \diff z,
+\]
+(Notice here that \(r = |\vec r|\) is fixed across the cylinder's surface!)
+
+\section*{Fluid flow and flux}
+
+% flow through a top hemisphere visualization
+We can imagine surface integrals of vector fields as an integral over \emph{flux density}, or ``flow'' density, to get the total \emph{flux}. 
+% visualization with angles and projections
+
+Then the integrand of the surface integral
+\[
+    \vec F \cdot (\uvec n \, \diff S)
+\]
+is seen as the ``volume flowing out of the area element \(\diff S\) per unit time.'' We rewrite the area differential vector (with magnitude equal to the area, pointing in the outward normal direction) as
+\[
+    \vec F \cdot \diff \vec S.
+\]
+
+\section*{How to compute surface integrals?}
+
+\begin{enumerate}
+\item Parametrize the surface in terms of parameters \(s, t\).
+\item Find the area element \(\diff \vec S\) in terms of \(\diff s, \diff t\).
+\item Integrate.
+\end{enumerate}
+
+\paragraph{Example}
+
+Take the surface parametrized by
+\[
+    (x, y, z) = (2 \cos \theta, 2 \sin \theta, z) = \vec X(\theta, z).
+\]
+Then we find the normal area element
+\[
+    \diff \vec S = (\vec X_\theta \, \diff \theta) \times (\vec X_z \, \diff z)
+    = (\vec X_\theta \times \vec X_z) \, \diff \theta \, \diff z.
+\]
+Take the partial derivatives
+\begin{align*}
+    \vec X_\theta &= (-2 \sin \theta, 2 \cos \theta, 0), \\
+    \vec X_z &= (0, 0, 1).
+\end{align*}
+Then the cross product is
+\[
+    \vec X_\theta \times \vec X_z = (2 \cos \theta, 2 \sin \theta, 0),
+\]
+and the area element is then
+\[
+    \diff \vec S = (\vec X_\theta \times \vec X_z) = (2 \cos \theta, 2 \sin \theta, 0) \, \diff \theta \, \diff z.
+\]
+Notice that this can be written as
+\[
+    \diff S = r \, \diff \theta \, \diff z.
+\]
+
+If, in general, we get some surface defined by
+\[
+    \vec X(x, y, z) = (x, y, f(x, y)),
+\]
+we can do some vector stuff.
+\[
+    \vec{\diff S}
+\]
+
+\end{document}
+
