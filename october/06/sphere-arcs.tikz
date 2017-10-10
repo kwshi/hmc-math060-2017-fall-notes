@@ -1,0 +1,108 @@
+\tdplotsetmaincoords{60}{120}
+\begin{tikzpicture}[tdplot_main_coords, scale=2]
+
+%\draw
+%  (0,0) circle[radius=1];
+
+\draw[->]
+  (1,0)
+  arc[radius=1, start angle=0, end angle=45]
+  node[below]{\(C_2\)};
+
+\draw
+  (45:1)
+  arc[radius=1, start angle=45, end angle=90];
+
+
+\tdplotsetthetaplanecoords{90};
+
+\draw[tdplot_rotated_coords]
+  (1,0) arc[radius=1, start angle=0, end angle=90]
+  node[midway, right]{\(C_3\)};
+
+\tdplotsetthetaplanecoords{0};
+
+\draw[tdplot_rotated_coords]
+  (1,0) arc[radius=1, start angle=0, end angle=90]
+  node[midway, left]{\(C_1\)};
+
+\draw[thick, dotted, tdplot_rotated_coords]
+  (0,0,0)
+    edge (1,0,0)
+    edge (0,1,0)
+    edge (0,0,1);
+
+\draw[thick, ->]
+  (1,0,0) -- (1.5,0,0)
+  node[left]{\(\uvec x\)};
+
+\draw[thick, ->]
+  (0,1,0) -- (0,1.5,0)
+  node[right]{\(\uvec y\)};
+
+\draw[thick, ->]
+  (0,0,1) -- (0,0,1.5)
+  node[above]{\(\uvec z\)};
+
+\tdplotsetthetaplanecoords{60};
+
+\foreach \i in {1,...,5} {
+  \tdplotmult{\t}{\i}{15}
+  \tdplotsetthetaplanecoords{\t}
+  \draw[tdplot_rotated_coords, dotted]
+%    (0,0) circle[radius=1];
+    (1,0) arc[radius=1, start angle=0, end angle=90];
+}
+\foreach \i in {1,...,5} {
+  \tdplotmult{\t}{\i}{15}
+  \draw[dotted]
+%    (0,0,{-cos(\t)}) circle[radius={sin(\t)}];
+    ({sin(\t)},0,{cos(\t)}) arc[radius={sin(\t)}, start angle=0, end angle=90];
+}
+
+\foreach \i in {0,...,18} {
+  \foreach \j in {0,...,18} {
+    \tdplotmult{\t}{\i}{5};
+    \tdplotmult{\p}{\j}{5};
+    
+    \tdplotsetcoord{p-\i-\j}{1}{\t}{\p};
+    
+  }
+}
+
+\foreach \i in {0,...,17} {
+  \foreach \j in {0,...,17} {
+    \newcount\jjc
+    \jjc=\numexpr\j+1\relax
+
+    \newcount\iic
+    \iic=\numexpr\i+1\relax
+
+    \newcommand{\jj}{\the\jjc}
+    \newcommand{\ii}{\the\iic}
+
+    \tdplotmult{\t}{\i}{5}
+    \tdplotmult{\p}{\j}{5}
+    %\fill[black, opacity={sin(\t)*cos(\p) * sin(60)*cos(30) + sin(\t)*sin(\p) * sin(60)*sin(30) + cos(\t)*cos(60)}]
+    %\fill[black, opacity={(1-cos(\t))/2}]
+    \fill[black, opacity={(1-(sin(\t)*cos(\p)*sin(30)+0+cos(\t)*cos(30))^2)/2}]
+      (p-\i-\j) -- (p-\i-\jj) -- (p-\ii-\jj) -- (p-\ii-\j) -- cycle;
+      
+    
+  }
+
+}
+
+\draw[fill=black!50]
+  (p-5-11) --
+  (p-7-11) --
+  node[below]{\(\diff S\)}
+  (p-7-13) -- (p-5-13) -- cycle;
+
+\draw[tdplot_rotated_coords, dashed]
+  (0,0) -- (30:1);
+\draw[ultra thick, -stealth, tdplot_rotated_coords]
+  (30:1) -- (30:2)
+  node[above right]{\(\uvec n\)};
+
+\end{tikzpicture}
