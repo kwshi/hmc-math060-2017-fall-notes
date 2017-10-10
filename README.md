@@ -11,16 +11,25 @@ incomplete.
 
 If you see something misleading or blatantly wrong in my notes, please feel free
 to call me out on my lies and deceptions by [opening an issue
-report](issue). That'll make it easier for me to correct my unscrupulous behavior.
+report](issue). That'll make it easier for me to correct my unscrupulous
+behavior.
 
 [issue]: (https://github.com/kwshi/hmc-math60/issues/new)
 
+# Completed notes
+
+Here's a somewhat tentative list of notes I consider complete (I won't go back
+to them unless someone tells me to):
+
+September 4 (Monday)
+: Differentiability, chain rule, directionoal derivatives, gradient
+
 # Python and TikZ
 
-The more curious ones among you may wonder how I generate these wild 3d
-diagrams and surface plots. The more attentive may notice, upon inspecting the source
-code, that I ~~sold my soul~~ use a Python library named `tikz`. I made (or rather
-am making) it. [Check it out!](tikz)
+The more curious ones among you may wonder how I generate these wild 3d diagrams
+and surface plots. The more attentive may notice, upon inspecting the source
+code, that I ~~sold my soul~~ use a Python library named `tikz`. I made (or
+rather am making) it. [Check it out!](tikz)
 
 [tikz]: (https://github.com/kwshi/python-tikz)
 
