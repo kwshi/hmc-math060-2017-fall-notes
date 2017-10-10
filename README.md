@@ -21,8 +21,11 @@ behavior.
 Here's a somewhat tentative list of notes I consider complete (I won't go back
 to them unless someone tells me to):
 
-September 4 (Monday)
-: Differentiability, chain rule, directionoal derivatives, gradient
+<dl>
+  <dt>September 4 (Monday)</dt>
+  <dd>Differentiability, chain rule, directionoal derivatives, gradient</dd>
+</dl>
+  
 
 # Python and TikZ
 
