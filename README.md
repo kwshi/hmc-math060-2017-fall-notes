@@ -22,7 +22,7 @@ Here's a somewhat tentative list of notes I consider complete (I won't go back
 to them unless someone tells me to):
 
 <dl>
-  <dt>[September 4 (Monday)](september/04/2017sep04.pdf)</dt>
+  <dt><a href="tree/master/september/04/2017sep04.pdf">September 4 (Monday)</a></dt>
   <dd>Differentiability, chain rule, directionoal derivatives, gradient</dd>
 </dl>
   
