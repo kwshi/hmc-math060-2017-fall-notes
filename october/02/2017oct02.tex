@@ -6,9 +6,12 @@
 
 \begin{document}
 
-\emph{Conservative} vector fields are just \emph{gradient} vector fields. To say that some function \(\vec F\) is a gradient field is to say that there is some \(f\) such that \(\vec F = \nabla f\).
+\emph{Conservative} vector fields are just \emph{gradient} vector fields. To say
+that some function \(\vec F\) is a gradient field is to say that there is some
+\(f\) such that \(\vec F = \nabla f\).
 
-Notice that the integral of a gradient vector field along a curve \(C\) is thus the \emph{change} in the potential function across the endpoints of the curve:
+Notice that the integral of a gradient vector field along a curve \(C\) is thus
+the \emph{change} in the potential function across the endpoints of the curve:
 \[
     \int_C \vec F \cdot \diff \vec s = \int_C (\nabla f) \cdot \diff \vec s =
     \int_C \left(\frac{\partial f}{\partial x_i} \, \diff x_i + \dots\right) =
@@ -18,48 +21,67 @@ where \(\vec b, \vec a\) are the endpoints of the curve \(C\).
 
 \paragraph{Example}
 
-Not all vector fields are gradient vector fields! Consider 
+Not all vector fields are gradient vector fields! Consider the field \(\vec
+F\colon \real^2 \to \real^2 = (-y, x)\), integrated from point \(P\) to point
+\(Q\) along two different paths \(C_1\) and \(C_2\):
+\begin{center}
+  \input{non-conservative.tikz}
+\end{center}
+Based on the geometry, we notice that the field is perpendicular to the
+\(x\)-axis everywhere along the \(x\)-axis, so that the integral
+
 % -y, x plot
 % c1 is flat diameter path
 % c2 is circular semi above horizontal path
 % both left to right
 % difference is given by green's theorem
-Then consider the curve \(C = C_1 \cup (-C_2)\), so that \(C\) is the boundary of the semicircular region \(D\). Then by Green's theorem
+Then consider the curve \(C = C_1 \cup (-C_2)\), so that \(C\) is the boundary
+of the semicircular region \(D\). Then by Green's theorem
 \[
-    \oint_{\partial D = C} \vec F \cdot \diff \vec s = \iint_D \left(\frac{\partial N}{\partial x} - \frac{\partial M}{\partial y}\right) \diff A,
+    \oint_{\partial D = C} \vec F \cdot \diff \vec s = \iint_D
+    \left(\frac{\partial N}{\partial x} - \frac{\partial M}{\partial y}\right)
+    \diff A,
 \]
 where \(\vec F(x, y) = (M(x, y), N(x, y))\). Specifically
 
-In general, these two different \emph{path integrals} are not equal. Vector fields are typically not conservative.
+In general, these two different \emph{path integrals} are not equal. Vector
+fields are typically not conservative.
 
-But when are they equal? Notice by Green's theorem that a closed-curve path integral in a curve like this is zero iff
+But when are they equal? Notice by Green's theorem that a closed-curve path
+integral in a curve like this is zero iff
 \[
     \frac{\partial N}{\partial x} - \frac{\partial M}{\partial y}.
 \]
-Geometrically, notice then that this condition means that the vector field has no ``rotation'' in the plane.
+Geometrically, notice then that this condition means that the vector field has
+no ``rotation'' in the plane.
 
 But also notice that, the reverse implication
 \[
-    \text{\(\vec F\) is conservative} \impliedby 
-    \frac{\partial N}{\partial x} - \frac{\partial M}{\partial y} = 0
+    \text{\(\vec F\) is conservative} \impliedby \frac{\partial N}{\partial x} -
+    \frac{\partial M}{\partial y} = 0
 \]
 only holds when \(D\) is ``simply-connected'' (there are no ``holes'' in \(D\)).
 
 \section*{Fundamental Theorem of Line Integrals}
 
-If path \(C\) starts at point \(A\), ends at point \(B\), and \(\vec F = \nabla f\), then
+If path \(C\) starts at point \(A\), ends at point \(B\), and \(\vec F = \nabla
+f\), then
 \[
     \int_C \vec F \cdot \diff \vec s = f(B) - f(A).
 \]
-Notice that if \(F\) is conservative, the integral over the curve depends \emph{only} on the endpoints, not on the path taken!
+Notice that if \(F\) is conservative, the integral over the curve depends
+\emph{only} on the endpoints, not on the path taken!
 
 \paragraph{Example}
 
-Consider the vector field \(\vec F = (2x, 2y)\). Calculate the path integral over \(C\), a straight line from \((1, 1)\) to \((4, 3)\).
+Consider the vector field \(\vec F = (2x, 2y)\). Calculate the path integral
+over \(C\), a straight line from \((1, 1)\) to \((4, 3)\).
 
-We can compute the integral by parametrizing the curve and integrating over the parametrized curve.
+We can compute the integral by parametrizing the curve and integrating over the
+parametrized curve.
 
-We can also compute the integral by evaluating the potential function \(f = x^2 + y^2\).
+We can also compute the integral by evaluating the potential function \(f = x^2
++ y^2\).
 
 \section*{Flux}
 
@@ -67,7 +89,11 @@ The flux is a double integral of a vector field over a surface:
 \[
     \iint_S \vec F \cdot \diff \vec S
 \]
-where \(\diff \vec S\) is some sort of a differential \emph{area} vector (a vector normal to the surface with differential area \(|\diff \vec S|\)).
+where \(\diff \vec S\) is some sort of a differential \emph{area} vector (a
+vector normal to the surface with differential area \(|\diff \vec S|\)).
+\begin{center}
+  \input{flux.tikz}
+\end{center}
 
 % visualizations???
 % curved surface with vector field flying around

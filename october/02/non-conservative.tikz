@@ -1,0 +1,55 @@
+\begin{tikzpicture}[scale=1/2]
+
+
+\tikzstyle{ax} = [thick, ->]
+\tikzstyle{curve} = [very thick, -stealth]
+
+\foreach \i in {-4,...,4} {
+  \foreach \j in {-3,...,3} {
+  
+    \draw[-stealth, gray]
+      (\i,\j)
+      coordinate[circle, inner sep=.4, fill=black]
+      --
+      +({-\j/5},{\i/5});
+  }
+}
+
+\draw[ax]
+  (-5,0) -- (5,0)
+  node[right]{\(\uvec x\)};
+
+\draw[ax]
+  (0,-4) -- (0,4)
+  node[above]{\(\uvec y\)};
+
+\draw[very thick]
+  (-3,0) -- (3,0)
+  arc[radius=3, start angle=0, end angle=180];
+
+\foreach \i in {0,...,3} {
+  \draw[curve]
+    ({-3+(6/4)*i},0) -- +({6/4},0);
+
+  \draw[curve]
+    ({180-\i*45}:3)
+    arc[radius=3, start angle={180-\i*45}, end angle={180-(\i+1)*45}]; 
+}
+%\draw[curve]
+%  (-3,0) -- (0,0);
+%
+%\draw[curve]
+%  (0,0) -- (3,0);
+%
+%\draw[curve]
+%  (3,0) arc[radius=3, start angle=0, end angle=90];
+%
+%\draw[curve]
+%  (0,3) arc[radius=3, start angle=90, end angle=180];
+%
+%
+%
+
+
+
+\end{tikzpicture}
