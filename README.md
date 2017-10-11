@@ -16,14 +16,35 @@ behavior.
 
 [issue]: (https://github.com/kwshi/hmc-math60/issues/new)
 
-# Completed notes
+# Urgency?
 
-Here's a somewhat tentative list of notes I consider complete (I won't go back
-to them unless someone tells me to):
+Because exams are coming up, and I'm somewhat behind on notes, you might need
+something urgently that I haven't written up yet. Feel free to email me if you'd
+like me to prioritize notes from a certain day so I can get to those first.
+
+# Notes directory
+
+Here's a list of notes. Notes marked with asterisks (*) are notes I consider
+incomplete. (Notes not marked are ones I consider complete.)
 
 <dl>
   <dt><a href="september/04/2017sep04.pdf">September 4 (Monday)</a></dt>
   <dd>Differentiability, chain rule, directionoal derivatives, gradient</dd>
+
+  <dt><a href="october/02/2017oct02.pdf">October 2 (Monday)*</a></dt>
+  <dd>Conservative fields and flux</dd>
+
+  <dt><a href="october/04/2017oct04.pdf">October 4 (Wednesday)*</a></dt>
+  <dd>Surface integrals</dd>
+
+  <dt><a href="october/06/2017oct06.pdf">October 6 (Friday)*</a></dt>
+  <dd>Three fundamental theorems (Green, Stokes, Gauss)</dd>
+
+  <dt><a href="october/09/2017oct09.pdf">October 9 (Monday)</a></dt>
+  <dd>Gauss's theorem and divergence</dd>
+
+  <dt><a href="october/11/2017oct11.pdf">October 11 (Wednesday)*</a></dt>
+  <dd>General review</dd>
 </dl>
   
 
