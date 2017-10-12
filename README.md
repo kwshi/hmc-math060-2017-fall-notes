@@ -53,6 +53,11 @@ incomplete. (Notes not marked are ones I consider complete.)
 
   <dt><a href="september/18/2017sep18.pdf">September 18 (Monday)*</a></dt>
   <dd>Lagrange multipliers</dd>
+</dl>
+
+## Post-midterm
+
+<dl>
 
   <dt><a href="september/22/2017sep22.pdf">September 22 (Friday)*</a></dt>
   <dd>Double and triple integrals</dd>
