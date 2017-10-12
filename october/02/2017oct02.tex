@@ -78,10 +78,43 @@ Consider the vector field \(\vec F = (2x, 2y)\). Calculate the path integral
 over \(C\), a straight line from \((1, 1)\) to \((4, 3)\).
 
 We can compute the integral by parametrizing the curve and integrating over the
-parametrized curve.
+parametrized curve. Let \((x, y) = (1+3t, 1+2t), 0 \le t \le 1\), so that the
+integral becomes
+\begin{align*}
+  \int_C \vec F \cdot \diff \vec s &= \int_0^1 2(1+3t, 1+2t) \cdot (3,2)\, \diff t \\
+  &= \int_0^1 2(5+13t) \, \diff t
+  &= \left.\frac{1}{13} \, (5+13t)^2\right\rvert_0^1
+  &= \frac{1}{13} \, (18^2 - 5^2)
+  &= \frac{1}{13} \, (18-5)(18+5)
+  &= 23.
+\end{align*}
 
-We can also compute the integral by evaluating the potential function \(f = x^2
-+ y^2\).
+
+We can also compute the integral by evaluating the ``change'' in the potential
+function \(f = x^2 + y^2\):
+\begin{gather*}
+  \int_C \vec F \cdot \diff \vec s = f(4, 3) - f(1, 1) =
+  (4^2 + 3^2) - (1^2 + 1^2)
+  = 23.
+\end{gather*}
+
+Wow, can't believe that the theorem is true! It essentially comes down to this
+rough simplification---recall the \emph{total differential} of a function:
+\begin{gather*}
+  \diff f(x_1, \dots, x_n) = \frac{\partial f}{\partial x_1} \, \diff x_1
+  + \dots + \frac{\partial f}{\partial x_n} \, \diff x_n.
+\end{gather*}
+Then the line integral of a conservative field \(\vec F = \nabla f\) is just
+\begin{gather*}
+  \int_C \vec F \cdot \diff \vec s =
+  \int_C (\nabla f) \cdot \diff \vec s =
+  \int_C \left(\frac{\partial f}{\partial x_i}, \dots\right) \cdot (\diff x_i, \dots) =
+  \int_C \left(\frac{\partial f}{\partial x_i} \, \diff x_i + \dots\right) =
+  \int_C \diff f.
+\end{gather*}
+
+
+
 
 \section*{Flux}
 

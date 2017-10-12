@@ -85,7 +85,12 @@ We calculate the curl of \(\vec F\):
 Then by Stokes' theorem the integral equals
 \[
     \iint_S \underbrace{\curl \vec F}_{3 \uvec z} \cdot \underbrace{\diff \vec S}_{\uvec n \, \diff S}.
-\]
+    \]
+    But notice, since the curl is constant, that this integral is simply the
+    flux through the spherical surface, given by the (magnitude of the) curl times the projection of the area onto the \(xy\)-plane:
+    \[\iint_S \curl \vec F \cdot \diff \vec S = 3 (\pi \cdot 1^2) = 3 \pi.\]
+
+    
 
 Recall the spherical surface area element
 \[
