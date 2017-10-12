@@ -27,9 +27,44 @@ like me to prioritize notes from a certain day so I can get to those first.
 Here's a list of notes. Notes marked with asterisks (*) are notes I consider
 incomplete. (Notes not marked are ones I consider complete.)
 
+## Pre-midterm
+
 <dl>
+  <dt><a href="september/01/2017sep01.pdf">September 1 (Friday)*</a></dt>
+
+  
   <dt><a href="september/04/2017sep04.pdf">September 4 (Monday)</a></dt>
-  <dd>Differentiability, chain rule, directionoal derivatives, gradient</dd>
+  <dd>Differentiability, chain rule, directional derivatives, gradient</dd>
+  
+  <dt><a href="september/06/2017sep06.pdf">September 6 (Wednesday)*</a></dt>
+  <dd>Directional derivatives, Hessian matrices</dd>
+
+  <dt><a href="september/08/2017sep08.pdf">September 8 (Friday)*</a></dt>
+  <dd>Directional derivatives, gradients, higher-order derivatives, Hessians, gradient potentials</dd>
+
+  <dt><a href="september/11/2017sep11.pdf">September 11 (Monday)*</a></dt>
+  <dd>Vector fields</dd>
+
+  <dt><a href="september/13/2017sep13.pdf">September 13 (Wednesday)*</a></dt>
+  <dd>Del operator, gradient vector fields, divergence, curl</dd>
+
+  <dt><a href="september/15/2017sep15.pdf">September 15 (Friday)*</a></dt>
+  <dd>Taylor theorem</dd>
+
+  <dt><a href="september/18/2017sep18.pdf">September 18 (Monday)*</a></dt>
+  <dd>Lagrange multipliers</dd>
+
+  <dt><a href="september/22/2017sep22.pdf">September 22 (Friday)*</a></dt>
+  <dd>Double and triple integrals</dd>
+  
+  <dt><a href="september/25/2017sep25.pdf">September 25 (Monday)*</a></dt>
+  <dd>Polar, spherical, cylindrical coordinates; coordinate transforms</dd>
+
+  <dt><a href="september/27/2017sep27.pdf">September 27 (Wednesday)*</a></dt>
+  <dd>Spherical coordinates, line integrals</dd>
+
+  <dt><a href="september/29/2017sep29.pdf">September 29 (Friday)*</a></dt>
+  <dd>Green's theorem</dd>
 
   <dt><a href="october/02/2017oct02.pdf">October 2 (Monday)*</a></dt>
   <dd>Conservative fields and flux</dd>
