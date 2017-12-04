@@ -4,10 +4,10 @@ Lecture notes from section 2, courtesy of the fantastic Prof. Gu
 
 # Work in progress?
 
-Yes. These notes are a work-in-progress. I take them in class, push them here,
-and continually (read: when I'm not lazy) update them over days to weeks after
-the lecture. Consequently, these notes (especially recent ones) are most likely
-incomplete.
+Unfortunately, I'm a lazy boy and am no longer in the class.  In this sense,
+these notes aren't really a work-in-progress, even though they are incomplete.
+Nevertheless, I'll be happy to make any modifications or add something upon
+request.  Just, uh, do an [issue] thing.  I'll get to it.
 
 If you see something misleading or blatantly wrong in my notes, please feel free
 to call me out on my lies and deceptions by [opening an issue
